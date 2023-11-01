@@ -64,3 +64,12 @@ def cancel_reservation(
     return reservation_svc.change_reservation(
         subject, ReservationPartial(id=id, state=ReservationState.CANCELLED)
     )
+
+
+@api.get("/reservation/{groupId}", tags=["Coworking"])
+def get_group_reservation(
+    id: int,
+    subject: User = Depends(registered_user),
+    reservation_svc: ReservationService = Depends(),
+) -> Reservation:
+    return reservation_svc.get_reservation(subject, id)
