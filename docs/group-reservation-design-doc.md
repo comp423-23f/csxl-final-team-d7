@@ -1,1 +1,7 @@
 # Group Reservation Design Document
+
+# Team D7
+
+Overview: When working on a group project for any of your classes, it can be a hassle to have to make every single person on the team reserve their own seat. This can also be an issue where you might not be able to get the seat that you want next to your team in the lab. However, the main aspect of this feature is to allow only one member from your team to be able to make a group reservation so that when an ambassador checks you in to the system, all of the members on the team will appear on the confirmation page. Additionally, the entire team can sit together without having to worry about losing their seat among their team during the reservation process.
+
+Key Personas: As Ferras Fanatic, I would like to be able to have the ability of adding my team memebrs to a drop-in reservation's confirmation page so my other team members do not have to redundantly spend their time reserving a spot. Instead, I can carry out the reservation for the whole team myself. Emaan Ambassador should have the capability through her service to check us all in as a group. Also, I need to be able to make sure that there are enough seats for a specific seat type within the lab to put in the group reservation and if there is not enough space, I should be declined access to make a reservation for the entire group.
