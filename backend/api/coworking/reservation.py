@@ -66,10 +66,11 @@ def cancel_reservation(
     )
 
 
+# this is meant to get a group reservation based off an id
 @api.get("/reservation/{groupId}", tags=["Coworking"])
 def get_group_reservation(
-    id: int,
+    group_id: int,
     subject: User = Depends(registered_user),
     reservation_svc: ReservationService = Depends(),
 ) -> Reservation:
-    return reservation_svc.get_reservation(subject, id)
+    return reservation_svc.get_reservation(subject, group_id)
