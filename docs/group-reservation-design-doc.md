@@ -2,14 +2,15 @@
 
 # Technical Implementation Opportunities and Planning
 
-https://www.figma.com/file/2YGlDIRTurVCfIfJo8V0qG/Group-Reservations-App?type=design&node-id=0%3A1&mode=design&t=OKPkXv7EvJxKw5co-1
+
 
 What specific areas of the existing code base will you directly depend upon, extend, or integrate with?
 Frontend:
 Within the frontend, we will work with app directory of the project, specifically within the app-routing.module.ts to move to a group reservation page, the app.module file to create any necessary components into the declarations of @NgModule, most likely the even-card.widget component to handle any clicked events on a card.
 We would also probably need to take use of the Profile class in order to retrieve user profiles that are registered within the system.
 We would also most likely need to depend upon the reservation component and service classes in our relation to creating group reservations.
-The ambassador home folder also needs to have an option to create group reservations AND view group reservations that currently exist.
+The ambassador home component also needs to view group reservations that currently exist.
+
 Backend:
 Within the backend, we definitely will need to integrate with the existing api’s to add our new endpoints for creating, deleting, updating, and getting data for our upcoming group reservation.
 We will also need access to the database to ensure that all the data remains saved and stored in a safe place where it can then be accessed later for future use.
