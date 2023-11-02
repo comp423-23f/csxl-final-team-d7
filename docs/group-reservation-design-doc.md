@@ -1,3 +1,4 @@
+
 # 0. Group Reservation Design Document // Team D7
 
 Overview: When working on a group project for any of your classes, it can be a hassle to have to make every single person on the team reserve their own seat. This can also be an issue where you might not be able to get the seat that you want next to your team in the lab. However, the main aspect of this feature is to allow only one member from your team to be able to make a group reservation so that when an ambassador checks you in to the system, all of the members on the team will appear on the confirmation page. Additionally, the entire team can sit together without having to worry about losing their seat among their team during the reservation process.
@@ -16,4 +17,5 @@ Mariam Manager should be able to see all registered students.
 If Sadiya Student's friend is not registered, an error shows up during check-in, taking her to the registration page allowing her to register her friend.
 
 
+Wireframes / Mockups: Figma Link for Group Res. Project- https://tinyurl.com/dv4xnc88
 
