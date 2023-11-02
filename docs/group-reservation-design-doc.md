@@ -2,6 +2,8 @@
 
 # Technical Implementation Opportunities and Planning
 
+https://www.figma.com/file/2YGlDIRTurVCfIfJo8V0qG/Group-Reservations-App?type=design&node-id=0%3A1&mode=design&t=OKPkXv7EvJxKw5co-1
+
 What specific areas of the existing code base will you directly depend upon, extend, or integrate with?
 Frontend:
 Within the frontend, we will work with app directory of the project, specifically within the app-routing.module.ts to move to a group reservation page, the app.module file to create any necessary components into the declarations of @NgModule, most likely the even-card.widget component to handle any clicked events on a card.
@@ -29,3 +31,5 @@ Only ambassadors should have access to all registrations.
 Only ambassadors should have access to delete reservations
 Ambassadors should not be able to alter any reservations.
 Ambassador should not access team information, only reservation information.
+
+
