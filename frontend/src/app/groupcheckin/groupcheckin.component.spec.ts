@@ -8,9 +8,8 @@ describe('GroupcheckinComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GroupcheckinComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupcheckinComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GroupcheckinComponent);
     component = fixture.componentInstance;
