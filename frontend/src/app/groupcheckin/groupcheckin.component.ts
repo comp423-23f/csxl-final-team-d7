@@ -5,4 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './groupcheckin.component.html',
   styleUrls: ['./groupcheckin.component.css']
 })
-export class GroupcheckinComponent {}
+export class GroupcheckinComponent {
+  public static Route = {
+    path: 'make-group-reservation',
+    component: GroupcheckinComponent
+  };
+}

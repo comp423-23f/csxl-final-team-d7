@@ -35,6 +35,17 @@ def draft_reservation(
     return reservation_svc.draft_reservation(subject, reservation_request)
 
 
+@api.post("/reservation/{groupId}", tags=["Coworking"])
+def draft_group_reservation(
+    groupId: int,
+    reservation_request: ReservationRequest,
+    subject: User = Depends(registered_user),
+    reservation_svc: ReservationService = Depends(),
+) -> Reservation:
+    """Draft a reservation request."""
+    return reservation_svc.draft_reservation(subject, reservation_request)
+
+
 @api.get("/reservation/{id}", tags=["Coworking"])
 def get_reservation(
     id: int,
@@ -42,6 +53,15 @@ def get_reservation(
     reservation_svc: ReservationService = Depends(),
 ) -> Reservation:
     return reservation_svc.get_reservation(subject, id)
+
+
+@api.get("/reservation/{groupId}", tags=["Coworking"])
+def get_group_reservation(
+    groupId: int,
+    subject: User = Depends(registered_user),
+    reservation_svc: ReservationService = Depends(),
+) -> Reservation:
+    return reservation_svc.get_reservation(subject, groupId)
 
 
 @api.put("/reservation/{id}", tags=["Coworking"])

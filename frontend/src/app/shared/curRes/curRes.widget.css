@@ -8,9 +8,9 @@
     font-size: 22px;
     
   }
-  
+
   .clickable-box {
-    width: 220px;
+    width: 205px;
     height: 55px;
     background-color: #5e6468;
     color: #fff;
@@ -20,13 +20,11 @@
     cursor: pointer;
     border-radius: 20px;
     font-size: 15px;
-    
-
   }
   
   .clickable-box:hover {
     background-color: #5e6468;
-    width: 225px;
+    width: 210px;
     height: 60px; 
     border-radius: 20px;
   }
