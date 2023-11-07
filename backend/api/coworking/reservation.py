@@ -84,3 +84,27 @@ def cancel_reservation(
     return reservation_svc.change_reservation(
         subject, ReservationPartial(id=id, state=ReservationState.CANCELLED)
     )
+
+
+
+
+
+
+
+
+
+
+
+
+
+@api.delete("/groupreservation/{groupid}", tags=["Coworking"])
+def cancel_groupreservation(
+    groupid: int,
+    subject: User = Depends(registered_user),
+    reservation_svc: ReservationService = Depends(),
+) -> Reservation:
+    """Cancel theb group reservation."""
+    return reservation_svc.change_reservation(
+        subject, ReservationPartial(id=groupid, state=ReservationState.CANCELLED)
+    )
+
