@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservation Form</title>
+  </head>
+  <body>
+    <h2>Reservation Form</h2>
+
+    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="pid">PID:</label>
+        <input type="text" id="pid" formControlName="pid" required />
+        <button type="button" value="Add User" (click)="onAddUser()">
+          Add User
+        </button>
+      </div>
+
+      <div>
+        <label for="when">When:</label>
+        <input type="text" id="when" formControlName="when" required />
+      </div>
+
+      <div>
+        <label for="what">What:</label>
+        <input type="text" id="what" formControlName="what" required />
+      </div>
+      <div>
+        <button class="button" type="submit">Submit</button>
+      </div>
+    </form>
+    <!-- Display added users -->
+    <div>
+      <h3>Added Users:</h3>
+      <ul>
+        <li *ngFor="let user of users">{{ user }}</li>
+      </ul>
+    </div>
+
+    <!-- Display the generated group ID -->
+    <div>
+      <h3>This is your Group ID: {{ groupId }}</h3>
+    </div>
+  </body>
+</html>
