@@ -12,5 +12,6 @@ export class NewResComponent {
   /** Button within the widget to navigate to input fields comp */
   navigateToOtherScreen() {
     this.router.navigate(['/make-reservation']);
+
   }
 }

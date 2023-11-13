@@ -10,6 +10,7 @@ import { AboutComponent } from './about/about.component';
 import { GroupcheckinComponent } from './groupcheckin/groupcheckin.component';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 
+
 const routes: Routes = [
   HomeComponent.Route,
   AboutComponent.Route,
