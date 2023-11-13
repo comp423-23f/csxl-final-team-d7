@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 from random import random
 from typing import Sequence
 from sqlalchemy.orm import Session, joinedload
+from backend.entities.coworking.group_reservation_entity import GroupReservationEntity
+from backend.models.coworking.reservation import GroupReservation
+
 from ...database import db_session
 from ...models.user import User, UserIdentity
 from ..exceptions import UserPermissionException, ResourceNotFoundException
@@ -39,6 +42,8 @@ class ReservationException(Exception):
 class ReservationService:
     """ReservationService is the access layer to managing reservations for seats and rooms."""
 
+    global group_reservations
+
     def __init__(
         self,
         session: Session = Depends(db_session),
@@ -57,6 +62,7 @@ class ReservationService:
         self._policy_svc = policy_svc
         self._operating_hours_svc = operating_hours_svc
         self._seat_svc = seats_svc
+        self.group_reservations = {}
 
     def get_reservation(self, subject: User, id: int) -> Reservation:
         """Lookup a reservation by ID.
@@ -348,11 +354,6 @@ class ReservationService:
                 * Limit users and seats counts to policy
             * Clean-up / Refactor Implementation
         """
-        # For the time being, reservations are limited to one user. As soon as
-        # possible, we'd like to add multi-user reservations so that pairs and teams
-        # can be simplified.
-        if len(request.users) > 1:
-            raise NotImplementedError("Multi-user reservations not yet supproted.")
 
         # Enforce Reservation Draft Permissions
         if subject.id not in [user.id for user in request.users]:
@@ -449,6 +450,42 @@ class ReservationService:
         self._session.add(draft)
         self._session.commit()
         return draft.to_model()
+
+    def draft_group_reservation(
+        self, request: GroupReservation
+    ) -> GroupReservation:
+        current_time = datetime.now()
+
+        draft = GroupReservationEntity(
+            group_id=request.group_id,
+            users=request.users,
+            when=current_time,
+            what=request.what,
+        )
+        self.group_reservations[request.group_id] = draft
+        print(self.group_reservations)
+
+        self._session.add(draft)
+        self._session.commit()
+
+        print("This is reservation service, get group" + str(current_time))
+
+        return draft.to_model()
+
+    def get_group_reservation(self, groupId: str) -> GroupReservation:
+        reservation_data = self.group_reservations.get(groupId)
+        print(self.group_reservations)
+        print("hello")
+        print(reservation_data)
+        if reservation_data:
+            return GroupReservation(
+                group_id=reservation_data["group_id"],
+                users=reservation_data["users"],
+                when=reservation_data["when"],
+                what=reservation_data["what"],
+            )
+        else:
+            raise ValueError("NOTFOUND")
 
     def change_reservation(
         self, subject: User, delta: ReservationPartial
