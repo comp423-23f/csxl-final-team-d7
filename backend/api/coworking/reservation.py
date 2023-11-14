@@ -3,6 +3,8 @@
 This API is used to make and manage reservations."""
 
 from fastapi import APIRouter, Depends, HTTPException
+
+from backend.models.coworking.reservation import GroupReservation
 from ..authentication import registered_user
 from ...services.coworking.reservation import ReservationService
 from ...models import User
@@ -35,15 +37,14 @@ def draft_reservation(
     return reservation_svc.draft_reservation(subject, reservation_request)
 
 
-@api.post("/reservation/{groupId}", tags=["Coworking"])
+@api.post("/group_reservation", tags=["Coworking"])
 def draft_group_reservation(
-    groupId: int,
-    reservation_request: ReservationRequest,
-    subject: User = Depends(registered_user),
+    request: GroupReservation,
     reservation_svc: ReservationService = Depends(),
-) -> Reservation:
+) -> GroupReservation:
     """Draft a reservation request."""
-    return reservation_svc.draft_reservation(subject, reservation_request)
+    return reservation_svc.draft_group_reservation(request)
+
 
 
 @api.get("/reservation/{id}", tags=["Coworking"])
@@ -55,13 +56,12 @@ def get_reservation(
     return reservation_svc.get_reservation(subject, id)
 
 
-@api.get("/reservation/{groupId}", tags=["Coworking"])
+@api.get("/get_group_reservation", tags=["Coworking"])
 def get_group_reservation(
-    groupId: int,
-    subject: User = Depends(registered_user),
+    groupId: str,
     reservation_svc: ReservationService = Depends(),
-) -> Reservation:
-    return reservation_svc.get_reservation(subject, groupId)
+) -> GroupReservation:
+    return reservation_svc.get_group_reservation(groupId)
 
 
 @api.put("/reservation/{id}", tags=["Coworking"])
@@ -85,18 +85,6 @@ def cancel_reservation(
         subject, ReservationPartial(id=id, state=ReservationState.CANCELLED)
     )
 
-
-
-
-
-
-
-
-
-
-
-
-
 @api.delete("/groupreservation/{groupid}", tags=["Coworking"])
 def cancel_groupreservation(
     groupid: int,
@@ -107,4 +95,3 @@ def cancel_groupreservation(
     return reservation_svc.change_reservation(
         subject, ReservationPartial(id=groupid, state=ReservationState.CANCELLED)
     )
-
