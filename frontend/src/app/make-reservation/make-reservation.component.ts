@@ -29,30 +29,42 @@ export class MakeReservationComponent {
   };
 
   onAddUser() {
-    // Add logic for the "Add User" button click event
     const pid = this.reservationForm.value.pid;
-    this.users.push(pid);
-    this.reservationForm.get('pid')!.reset();
+    console.log(`Selected PID: ${this.reservationForm.value.pid}`);
+
+    if (pid.length !== 9) {
+      window.alert('Error: Input must be exactly 9 characters long');
+    } else if (this.users.includes(pid)) {
+      window.alert('User already added: ' + pid);
+    } else {
+      this.users.push(pid);
+      this.reservationForm.get('pid')!.reset();
+      window.alert('User added: ' + pid);
+    }
   }
 
   onSubmit() {
-    // Add logic for the form submission
-    console.log('Form submitted');
-    console.log(`PID: ${this.reservationForm.value.pid}`);
-    console.log(`When: ${this.reservationForm.value.when}`);
-    console.log(`What: ${this.reservationForm.value.what}`);
-    window.alert('Form submitted');
-    this.zone.run(() => {
-      // Trigger change detection explicitly
-      this.groupId = this.generateRandomGroupId();
-      console.log(this.userGroups);
-
-      // Use the group ID as the key and store the users array as its value
-      this.userGroups[this.groupId] = this.users;
-
-      // Reset users array for the next submission
-      this.users = [];
-    });
+    if (this.users.length < 2) {
+      window.alert('Error: At least 2 different users must be added');
+    } else {
+      // Add logic for the form submission
+      console.log('Form submitted');
+      console.log(`PID: ${this.reservationForm.value.pid}`);
+      console.log(`When: ${this.reservationForm.value.when}`);
+      console.log(`What: ${this.reservationForm.value.what}`);
+      window.alert('Form submitted');
+      const pid = this.reservationForm.value.pid;
+      if (pid.length !== 9) {
+        window.alert('Error: Input must be exactly 9 characters long');
+      } else {
+        this.groupId = this.generateRandomGroupId();
+        console.log(this.userGroups);
+        this.userGroups[this.groupId] = this.users;
+        this.users = [];
+        this.reservationForm.reset();
+        window.alert('Form submitted. Group ID: ' + this.groupId);
+      }
+    }
   }
   private generateRandomGroupId(): string {
     const min = 1000;

@@ -42,7 +42,6 @@ import { EventFilterPipe } from './event/event-filter/event-filter.pipe';
 import { SharedModule } from './shared/shared.module';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +52,7 @@ import { MakeReservationComponent } from './make-reservation/make-reservation.co
     GateComponent,
     ProfileEditorComponent,
     GroupcheckinComponent,
-    MakeReservationComponent
+    MakeReservationComponent,
     GroupcheckinComponent
   ],
   imports: [
