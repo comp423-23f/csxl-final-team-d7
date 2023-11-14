@@ -7,9 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./newRes.widget.css']
 })
 export class NewResComponent {
+  static Route: Router;
   constructor(private router: Router) {}
   /** Button within the widget to navigate to input fields comp */
   navigateToOtherScreen() {
-    this.router.navigate(['/other-screen']);
+    this.router.navigate(['/make-reservation']);
+
   }
 }

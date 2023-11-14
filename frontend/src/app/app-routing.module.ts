@@ -8,6 +8,8 @@ import { CoworkingPageComponent } from './coworking/coworking-home/coworking-hom
 import { AmbassadorPageComponent } from './coworking/ambassador-home/ambassador-home.component';
 import { AboutComponent } from './about/about.component';
 import { GroupcheckinComponent } from './groupcheckin/groupcheckin.component';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
+
 
 const routes: Routes = [
   HomeComponent.Route,
@@ -17,6 +19,7 @@ const routes: Routes = [
   CoworkingPageComponent.Route,
   AmbassadorPageComponent.Route,
   GroupcheckinComponent.Route,
+  MakeReservationComponent.Route,
   {
     path: 'coworking',
     title: 'Cowork in the XL',
