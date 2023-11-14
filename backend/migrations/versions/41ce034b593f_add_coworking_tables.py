@@ -57,7 +57,12 @@ def upgrade() -> None:
     op.create_index(
         "ix_coworking__room_capacity", "coworking__room", ["capacity"], unique=False
     )
-
+    op.create_table(
+        "group_reservations",
+        sa.Column("id", sa.VARCHAR(), autoincrement=False, nullable=False),
+        sa.Column("when", postgresql.TIMESTAMP(), autoincrement=False, nullable=False),
+        sa.Column("what", sa.VARCHAR(), autoincrement=False, nullable=False),
+    )
     op.create_table(
         "coworking__seat",
         sa.Column(
