@@ -35,9 +35,13 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { ErrorDialogComponent } from './navigation/error-dialog/error-dialog.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+import { GroupcheckinComponent } from './groupcheckin/groupcheckin.component';
 import { GateComponent } from './gate/gate.component';
 import { ProfileEditorComponent } from './profile/profile-editor/profile-editor.component';
 import { EventFilterPipe } from './event/event-filter/event-filter.pipe';
+import { SharedModule } from './shared/shared.module';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +51,10 @@ import { EventFilterPipe } from './event/event-filter/event-filter.pipe';
     HomeComponent,
     AboutComponent,
     GateComponent,
-    ProfileEditorComponent
+    ProfileEditorComponent,
+    GroupcheckinComponent,
+    MakeReservationComponent
+    GroupcheckinComponent
   ],
   imports: [
     /* Angular */
@@ -58,6 +65,7 @@ import { EventFilterPipe } from './event/event-filter/event-filter.pipe';
     AppRoutingModule,
     LayoutModule,
     ReactiveFormsModule,
+    SharedModule,
 
     /* Material UI */
     MatButtonModule,

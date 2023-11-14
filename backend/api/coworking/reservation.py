@@ -46,6 +46,7 @@ def draft_group_reservation(
     return reservation_svc.draft_group_reservation(request)
 
 
+
 @api.get("/reservation/{id}", tags=["Coworking"])
 def get_reservation(
     id: int,
@@ -83,7 +84,6 @@ def cancel_reservation(
     return reservation_svc.change_reservation(
         subject, ReservationPartial(id=id, state=ReservationState.CANCELLED)
     )
-
 
 @api.delete("/groupreservation/{groupid}", tags=["Coworking"])
 def cancel_groupreservation(
