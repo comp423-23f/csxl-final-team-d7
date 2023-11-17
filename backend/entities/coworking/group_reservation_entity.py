@@ -1,10 +1,19 @@
 """Entity for Reservations."""
 
 from datetime import datetime
-from sqlalchemy import String, DateTime, Index
-from sqlalchemy.orm import mapped_column
+
+from sqlalchemy import Integer, String, Boolean, ForeignKey, DateTime, Index
+from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
+
 from backend.models.coworking.reservation import GroupReservation
 from ..entity_base import EntityBase
+from ...models.coworking import Reservation, ReservationState
+from .room_entity import RoomEntity
+from .seat_entity import SeatEntity
+from ..user_entity import UserEntity
+from .reservation_user_table import reservation_user_table
+from .reservation_seat_table import reservation_seat_table
+from typing import Self
 
 __authors__ = ["Kris Jordan"]
 __copyright__ = "Copyright 2023"
@@ -45,3 +54,4 @@ class GroupReservationEntity(EntityBase):
     def serialize_users(self, users: list[str]):
         """Serialize the 'users' column."""
         return ",".join(users) if users else ""
+

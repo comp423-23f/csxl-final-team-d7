@@ -3,6 +3,8 @@
 import pytest
 from unittest.mock import create_autospec
 
+from backend.models.coworking.reservation import GroupReservation
+
 from .....services import PermissionService
 from .....services.coworking import ReservationService
 from .....services.coworking.reservation import ReservationException
@@ -302,3 +304,26 @@ def test_draft_reservation_multiple_users_not_implemented(
                 }
             ),
         )
+
+
+def test_draft_group_reservation_permissions(
+    reservation_svc: ReservationService,
+):
+    now = datetime.now()
+
+    group_reservation_request = GroupReservation(
+        group_id="1000",
+        users=["user1", "user2"],
+        when=now,
+        what="Group Reservation",
+    )
+
+    group_reservation = reservation_svc.draft_group_reservation(
+        group_reservation_request
+    )
+
+    assert group_reservation is not None
+    assert group_reservation.group_id == "1000"
+    assert group_reservation.users == ["user1", "user2"]
+    assert group_reservation.when == now
+    assert group_reservation.what == "Group Reservation"
