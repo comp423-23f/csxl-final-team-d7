@@ -7,6 +7,9 @@ import { ProfileEditorComponent } from './profile/profile-editor/profile-editor.
 import { CoworkingPageComponent } from './coworking/coworking-home/coworking-home.component';
 import { AmbassadorPageComponent } from './coworking/ambassador-home/ambassador-home.component';
 import { AboutComponent } from './about/about.component';
+import { GroupcheckinComponent } from './groupcheckin/groupcheckin.component';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
+
 
 const routes: Routes = [
   HomeComponent.Route,
@@ -15,6 +18,8 @@ const routes: Routes = [
   GateComponent.Route,
   CoworkingPageComponent.Route,
   AmbassadorPageComponent.Route,
+  GroupcheckinComponent.Route,
+  MakeReservationComponent.Route,
   {
     path: 'coworking',
     title: 'Cowork in the XL',

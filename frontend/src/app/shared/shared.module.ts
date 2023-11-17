@@ -25,9 +25,18 @@ import { EventCard } from './event-card/event-card.widget';
 import { RouterModule } from '@angular/router';
 import { EventList } from './event-list/event-list.widget';
 import { EventFilterPipe } from '../event/event-filter/event-filter.pipe';
+import { NewResComponent } from './newRes/newRes.widget';
+import { CurrentResComponent } from './curRes/curRes.widget';
 
 @NgModule({
-  declarations: [SocialMediaIcon, SearchBar, EventCard, EventList],
+  declarations: [
+    SocialMediaIcon,
+    SearchBar,
+    EventCard,
+    EventList,
+    NewResComponent,
+    CurrentResComponent
+  ],
   imports: [
     CommonModule,
     MatTabsModule,
@@ -47,6 +56,13 @@ import { EventFilterPipe } from '../event/event-filter/event-filter.pipe';
     MatTooltipModule,
     RouterModule
   ],
-  exports: [SocialMediaIcon, SearchBar, EventCard, EventList]
+  exports: [
+    SocialMediaIcon,
+    SearchBar,
+    EventCard,
+    EventList,
+    NewResComponent,
+    CurrentResComponent
+  ]
 })
 export class SharedModule {}
