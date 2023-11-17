@@ -1,6 +1,15 @@
 """Join table between Reservation and Seat entities."""
 
-from sqlalchemy import Table, Column, ForeignKey
+from sqlalchemy import (
+    DateTime,
+    PrimaryKeyConstraint,
+    String,
+    Table,
+    Column,
+    ForeignKey,
+    ARRAY,
+)
+from sqlalchemy.dialects.postgresql import UUID
 from ..entity_base import EntityBase
 
 __authors__ = ["Kris Jordan"]
@@ -10,8 +19,14 @@ __license__ = "MIT"
 reservation_user_table = Table(
     "coworking__groupreservation",
     EntityBase.metadata,
-    Column("group_id", ForeignKey("coworking__reservation.id"), primary_key=True),
-    Column("users", ForeignKey("user.id"), primary_key=False),
-    Column("when", ForeignKey("user.id"), primary_key=False),
-    Column("what", ForeignKey("user.id"), primary_key=False),
+    Column(
+        "group_id",
+        UUID(as_uuid=True),
+        ForeignKey("coworking__group.id"),  # Update the ForeignKey as needed
+        primary_key=True,
+    ),
+    Column("users", ARRAY(String), nullable=False),
+    Column("when", DateTime, nullable=False),
+    Column("what", String, nullable=False),
+    PrimaryKeyConstraint("coworking__groupreservation.id"),
 )

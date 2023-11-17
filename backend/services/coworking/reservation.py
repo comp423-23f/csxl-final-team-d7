@@ -451,9 +451,7 @@ class ReservationService:
         self._session.commit()
         return draft.to_model()
 
-    def draft_group_reservation(
-        self, request: GroupReservation
-    ) -> GroupReservation:
+    def draft_group_reservation(self, request: GroupReservation) -> GroupReservation:
         current_time = datetime.now()
 
         draft = GroupReservationEntity(
@@ -462,30 +460,54 @@ class ReservationService:
             when=current_time,
             what=request.what,
         )
-        self.group_reservations[request.group_id] = draft
-        print(self.group_reservations)
 
-        self._session.add(draft)
-        self._session.commit()
-
-        print("This is reservation service, get group" + str(current_time))
+        try:
+            with self._session.begin():
+                self._session.add(draft)
+                self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise e
 
         return draft.to_model()
 
     def get_group_reservation(self, groupId: str) -> GroupReservation:
-        reservation_data = self.group_reservations.get(groupId)
-        print(self.group_reservations)
-        print("hello")
-        print(reservation_data)
-        if reservation_data:
-            return GroupReservation(
-                group_id=reservation_data["group_id"],
-                users=reservation_data["users"],
-                when=reservation_data["when"],
-                what=reservation_data["what"],
-            )
+        reservation_entity = (
+            self._session.query(GroupReservationEntity)
+            .filter_by(group_id=groupId)
+            .first()
+        )
+
+        if reservation_entity:
+            return reservation_entity.to_model()
         else:
             raise ValueError("NOTFOUND")
+
+    def delete_group_reservation(self, groupId: str):
+        reservation_entity = {
+            self._session.query(GroupReservationEntity)
+            .filter_by(group_id=groupId)
+            .first()
+        }
+
+        if reservation_entity:
+            self._session.delete(reservation_entity)
+            self._session.commit()
+        else:
+            raise ValueError("No group reservation with this ID exists.")
+
+    # def update_group_reservation(self, groupId: str, updated_data: dict) -> Union[GroupReservation, None]:
+    #     reservation_entity = {
+    #         self._session.query(GroupReservationEntity).filter_by(group_id=groupId).first()
+    #     }
+
+    #     if reservation_entity:
+    #         for key, value in updated_data.items():
+    #             setattr(reservation_entity, key, value)
+
+    #         self._session.commit()
+    #         return reservation_entity
 
     def change_reservation(
         self, subject: User, delta: ReservationPartial
