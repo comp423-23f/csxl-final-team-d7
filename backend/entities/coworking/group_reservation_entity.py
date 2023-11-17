@@ -1,6 +1,7 @@
 """Entity for Reservations."""
 
 from datetime import datetime
+
 from sqlalchemy import Integer, String, Boolean, ForeignKey, DateTime, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
 
@@ -21,12 +22,14 @@ __license__ = "MIT"
 
 class GroupReservationEntity(EntityBase):
     __tablename__ = "coworking__groupreservation"
-    Index("coworking__reservation_time_idx", "group_id", "end", "state", unique=False),
+    Index("coworking__reservation_time_idx", "group_id", "when", "state", unique=False),
 
-    group_id: Mapped[str] = mapped_column(String, primary_key=True)
-    users: Mapped[list[str]] = mapped_column(String, nullable=False)
-    when: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-    what: Mapped[str] = mapped_column(String, nullable=False)
+    group_id = mapped_column(String, primary_key=True)
+    users = mapped_column(
+        String, nullable=False
+    )  # Assuming users will be stored as a serialized string
+    when = mapped_column(DateTime, nullable=False)
+    what = mapped_column(String, nullable=False)
 
     def to_model(self) -> GroupReservation:
         """Converts the entity to a model.
@@ -35,7 +38,20 @@ class GroupReservationEntity(EntityBase):
             Reservation: The model representation of the entity."""
         return GroupReservation(
             group_id=self.group_id,
-            users=self.users,
+            users=self.deserialize_users(),
             when=self.when,
             what=self.what,
         )
+
+    def deserialize_users(self):
+        """Deserialize the 'users' column."""
+        if self.users:
+            return self.users.split(
+                ","
+            )  # Assuming users are stored as a comma-separated string
+        return []
+
+    def serialize_users(self, users: list[str]):
+        """Serialize the 'users' column."""
+        return ",".join(users) if users else ""
+
