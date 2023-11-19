@@ -4,8 +4,9 @@ This API is used to make and manage reservations."""
 
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
-
+from typing import List
 from backend.models.coworking.reservation import GroupReservation, AmbassadorReservation
+from backend.entities.coworking import AmbassadorReservationEntity
 from ..authentication import registered_user
 from ...services.coworking.reservation import ReservationService
 from ...models import User
@@ -80,7 +81,7 @@ def get_group_reservation(
 @api.get("/get_ambass_group_reservations", tags=["Coworking"])
 def get_ambass_group_reservations(
     reservation_svc: ReservationService = Depends(),
-) -> List[AmbassadorReservation]:
+) -> AmbassadorReservationEntity[AmbassadorReservationEntity]:
     return reservation_svc.get_ambass_group_reservations()
 
 

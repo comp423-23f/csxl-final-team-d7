@@ -10,6 +10,8 @@ from backend.entities.coworking.ambassador_reservations_entity import (
     AmbassadorReservationEntity,
 )
 
+from typing import List
+
 from backend.models.coworking.reservation import GroupReservation, AmbassadorReservation
 
 from ...database import db_session
@@ -506,12 +508,13 @@ class ReservationService:
         else:
             raise ValueError("NOTFOUND")
 
-    def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
+    def get_ambass_group_reservations(self) -> List[AmbassadorReservationEntity]:
         reservation_entity = (
             self._session.query(AmbassadorReservationEntity)
             .filter_by(group_id=groupId)
             .all()
         )
+
         if reservation_entity:
             return reservation_entity
         else:

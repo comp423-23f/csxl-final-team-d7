@@ -24,6 +24,7 @@ export class GroupListComponent implements OnInit {
     this.groupService.getAmbassGroups().subscribe(
       (data: AmbassadorGroupReservation[]) => {
         this.ambassGroups = data;
+        console.log(data + 'this is data');
       },
       (error) => {
         console.error('Error fetching ambassador groups:', error);
