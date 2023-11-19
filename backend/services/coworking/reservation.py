@@ -6,7 +6,11 @@ from random import random
 from typing import Sequence
 from sqlalchemy.orm import Session, joinedload
 from backend.entities.coworking.group_reservation_entity import GroupReservationEntity
-from backend.models.coworking.reservation import GroupReservation
+from backend.entities.coworking.ambassador_reservations_entity import (
+    AmbassadorReservationEntity,
+)
+
+from backend.models.coworking.reservation import GroupReservation, AmbassadorReservation
 
 from ...database import db_session
 from ...models.user import User, UserIdentity
@@ -469,7 +473,24 @@ class ReservationService:
             # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
             self._session.rollback()
             raise e
-        
+
+        print(draft.to_model())
+
+        return draft.to_model()
+
+    def draft_amabassador_group_reservation(
+        self, request: AmbassadorReservation
+    ) -> AmbassadorReservation:
+        draft = AmbassadorReservationEntity(group_id=request.group_id, status=False)
+        try:
+            with self._session.begin():
+                self._session.add(draft)
+                self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise e
+
         print(draft.to_model())
 
         return draft.to_model()

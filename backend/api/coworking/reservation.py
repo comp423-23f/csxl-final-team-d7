@@ -5,7 +5,7 @@ This API is used to make and manage reservations."""
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 
-from backend.models.coworking.reservation import GroupReservation
+from backend.models.coworking.reservation import GroupReservation, AmbassadorReservation
 from ..authentication import registered_user
 from ...services.coworking.reservation import ReservationService
 from ...models import User
@@ -46,8 +46,17 @@ def draft_group_reservation(
     """Draft a reservation request."""
     print("MADE IT IN API LAYER")
     print("Received request", request.model_dump())
-
     return reservation_svc.draft_group_reservation(request)
+
+@api.post("/ambassador_group_reservation", tags=["Coworking"])
+def draft_amabassador_group_reservation(
+    request: AmbassadorReservation,
+    reservation_svc: ReservationService = Depends(),
+) -> AmbassadorReservation:
+    """Draft a reservation request."""
+    print("MADE IT IN API LAYER")
+    print("Received request", request.model_dump())
+    return reservation_svc.draft_amabassador_group_reservation(request)
 
 
 @api.get("/reservation/{id}", tags=["Coworking"])
