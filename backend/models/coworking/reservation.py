@@ -56,5 +56,10 @@ class ReservationDetails(Reservation):
 class GroupReservation(BaseModel):
     group_id: str = ""
     users: list[str] = []
-    when: datetime
+    when: datetime | None = None
     what: str = ""
+
+
+class AmbassadorReservation(BaseModel):
+    group_id: str = ""
+    status: bool

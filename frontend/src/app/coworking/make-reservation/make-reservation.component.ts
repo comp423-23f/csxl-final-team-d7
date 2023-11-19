@@ -67,7 +67,9 @@ export class MakeReservationComponent {
         group_id: this.groupId,
         users: this.users,
         when: mock_datetime.now().toISOString(),
-        what: this.reservationForm.value.what
+        what: this.reservationForm.value.what,
+        start: mock_datetime.now().toISOString(),
+        end: mock_datetime.now().toISOString()
       };
 
       this.coworkingService.draftGroupReservation(request).subscribe(
@@ -85,7 +87,6 @@ export class MakeReservationComponent {
       // Make the backend request
       this.generatedGroupIds.push(this.generateRandomGroupId()); // Store generated group ID
       this.groupService.setGroupIds([this.generateRandomGroupId()]); // Share group ID with the service
-
       this.users = [];
       this.reservationForm.reset();
       window.alert('Form submitted. Group ID: ' + this.groupId);

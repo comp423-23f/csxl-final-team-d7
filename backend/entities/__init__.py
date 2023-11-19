@@ -21,6 +21,7 @@ from .user_role_table import user_role_table
 from .organization_entity import OrganizationEntity
 from .event_entity import EventEntity
 from .coworking.group_reservation_entity import GroupReservation
+from .coworking.ambassador_reservations_entity import AmbassadorReservation
 
 __authors__ = ["Kris Jordan"]
 __copyright__ = "Copyright 2023"
