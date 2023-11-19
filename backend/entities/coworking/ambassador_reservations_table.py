@@ -17,7 +17,7 @@ __authors__ = ["Kris Jordan"]
 __copyright__ = "Copyright 2023"
 __license__ = "MIT"
 
-Ambassador_reservation_table = Table(
+ambassador_reservation_table = Table(
     "coworking__ambassadorgroupreservation",
     EntityBase.metadata,
     Column(
@@ -28,5 +28,4 @@ Ambassador_reservation_table = Table(
     ),
     Column("status", Boolean, nullable=False),
     PrimaryKeyConstraint("coworking__ambassadorgroupreservation.id"),
-    extend_existing=True,
 )

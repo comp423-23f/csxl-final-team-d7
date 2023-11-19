@@ -64,7 +64,9 @@ export class MakeReservationComponent {
         group_id: this.groupId,
         users: this.users,
         when: mock_datetime.now().toISOString(),
-        what: this.reservationForm.value.what
+        what: this.reservationForm.value.what,
+        start: mock_datetime.now().toISOString(),
+        end: mock_datetime.now().toISOString()
       };
 
       this.coworkingService.draftGroupReservation(request).subscribe(

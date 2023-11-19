@@ -11,6 +11,7 @@ from ...models.coworking import Reservation, ReservationState
 from .room_entity import RoomEntity
 from .seat_entity import SeatEntity
 from ..user_entity import UserEntity
+
 from typing import Self
 
 __authors__ = ["Kris Jordan"]

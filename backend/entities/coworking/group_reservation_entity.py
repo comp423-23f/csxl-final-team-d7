@@ -22,7 +22,14 @@ __license__ = "MIT"
 
 class GroupReservationEntity(EntityBase):
     __tablename__ = "coworking__groupreservation"
-    Index("coworking__reservation_time_idx", "group_id", "when", "state", unique=False),
+    Index(
+        "coworking__reservation_time_idx",
+        "group_id",
+        "users",
+        "when",
+        "what",
+        unique=False,
+    ),
 
     group_id = mapped_column(String, primary_key=True)
     users = mapped_column(
@@ -54,4 +61,3 @@ class GroupReservationEntity(EntityBase):
     def serialize_users(self, users: list[str]):
         """Serialize the 'users' column."""
         return ",".join(users) if users else ""
-
