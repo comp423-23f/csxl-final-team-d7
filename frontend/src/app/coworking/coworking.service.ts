@@ -5,6 +5,7 @@ import {
   CoworkingStatus,
   CoworkingStatusJSON,
   GroupReservation,
+  GroupReservationJSON,
   Reservation,
   ReservationJSON,
   SeatAvailability,
@@ -68,19 +69,15 @@ export class CoworkingService implements OnDestroy {
       .pipe(map(parseReservationJSON));
   }
 
-  draftGroupReservation(
-    groupReservation: GroupReservation
-  ): Observable<GroupReservation> {
+  draftGroupReservation(groupReservation: GroupReservation) {
     // Add any validation logic for the group registration here
 
     // Assuming your backend endpoint for group registration is "/api/group_registration"
     console.log('ONLY MADE IT IN SERVICE LAYER');
     console.log(groupReservation);
-    return this.http.post<GroupReservation>(
+    return this.http.post<GroupReservationJSON>(
       '/api/coworking/group_reservation',
-      {
-        groupReservation
-      }
+      groupReservation
     );
   }
 }
