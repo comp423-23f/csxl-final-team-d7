@@ -501,9 +501,19 @@ class ReservationService:
             .filter_by(group_id=groupId)
             .first()
         )
-
         if reservation_entity:
             return reservation_entity.to_model()
+        else:
+            raise ValueError("NOTFOUND")
+
+    def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
+        reservation_entity = (
+            self._session.query(AmbassadorReservationEntity)
+            .filter_by(group_id=groupId)
+            .all()
+        )
+        if reservation_entity:
+            return reservation_entity
         else:
             raise ValueError("NOTFOUND")
 

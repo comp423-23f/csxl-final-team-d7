@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { GroupService } from '../group.service';
-
+import { AmbassadorGroupReservation } from '../coworking/coworking.models';
 @Component({
   selector: 'app-display-group-id',
   templateUrl: './checkin-reservation.component.html',
@@ -12,7 +12,7 @@ import { GroupService } from '../group.service';
 export class GroupListComponent implements OnInit {
   groupIds: string[] = [];
   isCheckInMode: boolean = true; // Track whether it's check-in or check-out
-
+  private ambassGroups: AmbassadorGroupReservation[] = [];
   constructor(private groupService: GroupService) {}
 
   public static Route = {
@@ -21,7 +21,14 @@ export class GroupListComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.groupIds = this.groupService.getGroupIds();
+    this.groupService.getAmbassGroups().subscribe(
+      (data: AmbassadorGroupReservation[]) => {
+        this.ambassGroups = data;
+      },
+      (error) => {
+        console.error('Error fetching ambassador groups:', error);
+      }
+    );
   }
 
   handleCheckIn() {

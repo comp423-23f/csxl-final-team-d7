@@ -76,7 +76,7 @@ export class MakeReservationComponent {
       };
       const ambassadorRequest: AmbassadorGroupReservation = {
         group_id: this.groupId,
-        status: false
+        status: '0'
       };
 
       this.coworkingService.draftGroupReservation(request).subscribe(
