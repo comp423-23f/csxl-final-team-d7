@@ -8,9 +8,8 @@ from sqlalchemy import (
     Column,
     ForeignKey,
     ARRAY,
+    Boolean,
 )
-
-
 from sqlalchemy.dialects.postgresql import UUID
 from ..entity_base import EntityBase
 
@@ -18,8 +17,8 @@ __authors__ = ["Kris Jordan"]
 __copyright__ = "Copyright 2023"
 __license__ = "MIT"
 
-reservation_user_table = Table(
-    "coworking__groupreservation",
+Ambassador_reservation_table = Table(
+    "coworking__ambassadorgroupreservation",
     EntityBase.metadata,
     Column(
         "group_id",
@@ -27,8 +26,7 @@ reservation_user_table = Table(
         ForeignKey("coworking__group.id"),  # Update the ForeignKey as needed
         primary_key=True,
     ),
-    Column("users", ARRAY(String), nullable=False),
-    Column("when", DateTime, nullable=False),
-    Column("what", String, nullable=False),
-    PrimaryKeyConstraint("coworking__groupreservation.id"),
+    Column("status", Boolean, nullable=False),
+    PrimaryKeyConstraint("coworking__ambassadorgroupreservation.id"),
+    extend_existing=True,
 )
