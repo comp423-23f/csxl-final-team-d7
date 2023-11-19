@@ -469,6 +469,8 @@ class ReservationService:
             # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
             self._session.rollback()
             raise e
+        
+        print(draft.to_model())
 
         return draft.to_model()
 
