@@ -87,7 +87,7 @@ export class CoworkingService implements OnDestroy {
 
     // Assuming your backend endpoint for group registration is "/api/group_registration"
     return this.http.post<AmbassadorGroupReservation>(
-      '/api/coworking/ambassador_group_reservation"',
+      '/api/coworking/ambassador_group_reservation',
       ambassadorGroupReservation
     );
   }

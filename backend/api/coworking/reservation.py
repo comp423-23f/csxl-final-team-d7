@@ -48,15 +48,16 @@ def draft_group_reservation(
     print("Received request", request.model_dump())
     return reservation_svc.draft_group_reservation(request)
 
+
 @api.post("/ambassador_group_reservation", tags=["Coworking"])
-def draft_amabassador_group_reservation(
+def draft_ambassador_group_reservation(
     request: AmbassadorReservation,
     reservation_svc: ReservationService = Depends(),
 ) -> AmbassadorReservation:
     """Draft a reservation request."""
-    print("MADE IT IN API LAYER")
+    print("MADE IT Ambassador LAYER")
     print("Received request", request.model_dump())
-    return reservation_svc.draft_amabassador_group_reservation(request)
+    return reservation_svc.draft_ambassador_group_reservation(request)
 
 
 @api.get("/reservation/{id}", tags=["Coworking"])

@@ -478,7 +478,7 @@ class ReservationService:
 
         return draft.to_model()
 
-    def draft_amabassador_group_reservation(
+    def draft_ambassador_group_reservation(
         self, request: AmbassadorReservation
     ) -> AmbassadorReservation:
         draft = AmbassadorReservationEntity(group_id=request.group_id, status=False)
