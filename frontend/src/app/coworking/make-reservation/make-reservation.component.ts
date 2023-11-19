@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { GroupReservation } from '../coworking.models';
 import { CoworkingService } from '../coworking.service';
+import { GroupService } from 'src/app/group.service';
 
 @Component({
   selector: 'app-make-reservation',
@@ -14,12 +15,14 @@ export class MakeReservationComponent {
   users: any[] = []; // Array to store added users
   userGroups: { [groupId: string]: string[] } = {};
   groupId: any;
+  generatedGroupIds: string[] = [];
   reservationForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
-    private coworkingService: CoworkingService
+    private coworkingService: CoworkingService,
+    private groupService: GroupService
   ) {
     this.reservationForm = this.formBuilder.group({
       pid: '',
@@ -80,6 +83,8 @@ export class MakeReservationComponent {
         }
       );
       // Make the backend request
+      this.generatedGroupIds.push(this.generateRandomGroupId()); // Store generated group ID
+      this.groupService.setGroupIds([this.generateRandomGroupId()]); // Share group ID with the service
 
       this.users = [];
       this.reservationForm.reset();
