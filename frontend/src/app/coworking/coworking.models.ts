@@ -52,6 +52,13 @@ export interface ReservationJSON extends TimeRangeJSON {
   state: string;
 }
 
+export interface GroupReservation {
+  group_id: string;
+  users: string[];
+  when: Date;
+  what: string;
+}
+
 export interface Reservation extends TimeRange {
   id: number;
   users: Profile[];
