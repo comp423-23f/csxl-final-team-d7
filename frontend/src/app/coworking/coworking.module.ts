@@ -14,6 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { ReservationComponent } from './reservation/reservation.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ReservationComponent } from './reservation/reservation.component';
     MatExpansionModule,
     MatButtonModule,
     MatTableModule,
-    AsyncPipe
+    AsyncPipe,
+    SharedModule
   ]
 })
 export class CoworkingModule {}
