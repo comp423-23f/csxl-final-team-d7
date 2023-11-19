@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { Route } from '@angular/router';
 import { permissionGuard } from 'src/app/permission.guard';
 import { profileResolver } from 'src/app/profile/profile.resolver';
 import { Observable, Subscription, map, mergeMap, tap, timer } from 'rxjs';
 import { Reservation } from '../coworking.models';
 import { AmbassadorService } from './ambassador.service';
+import { CurrentResComponent } from 'src/app/shared/curRes/curRes.widget';
 
 @Component({
   selector: 'app-coworking-ambassador-home',

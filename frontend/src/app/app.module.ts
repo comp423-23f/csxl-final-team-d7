@@ -41,6 +41,8 @@ import { ProfileEditorComponent } from './profile/profile-editor/profile-editor.
 import { EventFilterPipe } from './event/event-filter/event-filter.pipe';
 import { SharedModule } from './shared/shared.module';
 import { MakeReservationComponent } from './coworking/make-reservation/make-reservation.component';
+import { GroupListComponent } from './checkin-reservation/checkin-reservation.component';
+import { GroupService } from './group.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,7 @@ import { MakeReservationComponent } from './coworking/make-reservation/make-rese
     ProfileEditorComponent,
     GroupcheckinComponent,
     MakeReservationComponent,
-    GroupcheckinComponent
+    GroupListComponent
   ],
   imports: [
     /* Angular */

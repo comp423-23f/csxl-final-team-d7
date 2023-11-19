@@ -1,0 +1,11 @@
+/* styles.css or checkin-reservation.component.css */
+.light-green-button {
+    background-color: lightgreen;
+    color: black; /* You can adjust the text color as needed */
+  }
+  
+  .light-red-button {
+    background-color: lightcoral;
+    color: white; /* You can adjust the text color as needed */
+  }
+  
