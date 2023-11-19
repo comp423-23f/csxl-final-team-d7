@@ -58,3 +58,8 @@ class GroupReservation(BaseModel):
     users: list[str] = []
     when: datetime | None = None
     what: str = ""
+
+
+class AmbassadorReservation(BaseModel):
+    group_id: str = ""
+    status: bool
