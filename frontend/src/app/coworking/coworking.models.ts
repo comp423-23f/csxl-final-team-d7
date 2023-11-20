@@ -52,6 +52,11 @@ export interface ReservationJSON extends TimeRangeJSON {
   state: string;
 }
 
+export interface AmbassadorGroupReservation {
+  group_id: string;
+  status: boolean;
+}
+
 export interface GroupReservation extends TimeRange {
   group_id: string;
   users: string[];
