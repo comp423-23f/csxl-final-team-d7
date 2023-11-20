@@ -306,13 +306,13 @@ class ReservationService:
         reservations = self.get_seat_reservations(seats, reservation_range)
 
         # Subtract all seat reservations from their availability
-        self._remove_reservations_from_availability(
+        self._remove_reservations_from_availability(  # type: ignore
             seat_availability_dict, reservations
         )
 
         # Remove seats with availability below threshold
         available_seats: list[SeatAvailability] = list(
-            self._prune_seats_below_availability_threshold(
+            self._prune_seats_below_availability_threshold(  # type: ignore
                 list(seat_availability_dict.values()),
                 self._policy_svc.minimum_reservation_duration()
                 - MINUMUM_RESERVATION_EPSILON,
@@ -507,7 +507,6 @@ def update_ambassador_group_reservation(
         .filter_by(group_id=group_id)
         .first()
     )
-
 
     # Update the properties based on the new data
     existing_ambass_group.status = new_ambass_group.status
