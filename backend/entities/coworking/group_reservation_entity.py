@@ -53,9 +53,8 @@ class GroupReservationEntity(EntityBase):
     def deserialize_users(self):
         """Deserialize the 'users' column."""
         if self.users:
-            return self.users.split(
-                ","
-            )  # Assuming users are stored as a comma-separated string
+            return self.users.strip("{}").split(",")
+
         return []
 
     def serialize_users(self, users: list[str]):
