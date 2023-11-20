@@ -3,7 +3,7 @@
 import pytest
 from unittest.mock import create_autospec
 
-from backend.models.coworking.reservation import GroupReservation
+from backend.models.coworking.reservation import AmbassadorReservation, GroupReservation
 
 from .....services import PermissionService
 from .....services.coworking import ReservationService
@@ -306,24 +306,72 @@ def test_draft_reservation_multiple_users_not_implemented(
         )
 
 
-def test_draft_group_reservation_permissions(
+def test_draft_group_reservation_success(reservation_svc: ReservationService):
+    """
+    Test the successful drafting of a group reservation.
+    """
+    # Create a valid GroupReservation request
+    group_reservation_request = GroupReservation(
+        group_id="test_group",
+        users=["123456789", "987654321"],  # Example valid PIDs
+        what="group_meeting",
+        when=datetime.now(),  # Example datetime
+    )
+
+    # Call the draft_group_reservation method
+    result = reservation_svc.draft_group_reservation(group_reservation_request)
+
+    # Assertions
+    assert result is not None
+    assert result.group_id == group_reservation_request.group_id
+    assert result.users == group_reservation_request.users
+    assert result.what == group_reservation_request.what
+    assert result.when == group_reservation_request.when  # Com
+
+
+def test_draft_group_reservation_exception(reservation_svc: ReservationService):
+    """
+    Test handling of exceptions in drafting a group reservation.
+    """
+    # Create an invalid GroupReservation request
+    invalid_group_reservation_request = GroupReservation(
+        group_id="",
+        users=["invalid"],  # Invalid PID
+        what="",
+        when=None,  # Invalid datetime
+    )
+
+    # Expect the function to raise an exception
+    with pytest.raises(Exception) as excinfo:
+        reservation_svc.draft_group_reservation(invalid_group_reservation_request)
+
+    # Check if the correct exception is raised
+    assert isinstance(excinfo.value, ValueError)  # Replace with expected exception type
+
+
+def test_draft_ambassador_group_reservation_success(
     reservation_svc: ReservationService,
 ):
-    now = datetime.now()
+    # Instance of the class containing the method
 
-    group_reservation_request = GroupReservation(
-        group_id="1000",
-        users=["user1", "user2"],
-        when=now,
-        what="Group Reservation",
-    )
+    # Mock request
+    request = AmbassadorReservation(group_id="test_group_id", status=False)
 
-    group_reservation = reservation_svc.draft_group_reservation(
-        group_reservation_request
-    )
+    # Call the function
+    result = reservation_svc.draft_ambassador_group_reservation(request)
 
-    assert group_reservation is not None
-    assert group_reservation.group_id == "1000"
-    assert group_reservation.users == ["user1", "user2"]
-    assert group_reservation.when == now
-    assert group_reservation.what == "Group Reservation"
+    # Assertions
+    assert result.group_id == request.group_id
+    assert result.status == request.status
+
+
+def test_draft_ambassador_group_reservation_exception(
+    reservation_svc: ReservationService,
+):
+    request = AmbassadorReservation(group_id="test_group_id", status=False)
+
+    # Expect the function to raise an exception
+    with pytest.raises(Exception) as excinfo:
+        reservation_svc.draft_ambassador_group_reservation(request)
+
+    assert "Database error" in str(excinfo.value)
