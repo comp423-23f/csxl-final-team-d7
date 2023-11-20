@@ -2,7 +2,10 @@ import { Component, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { GroupReservation } from '../coworking.models';
+import {
+  AmbassadorGroupReservation,
+  GroupReservation
+} from '../coworking.models';
 import { CoworkingService } from '../coworking.service';
 import { GroupService } from 'src/app/group.service';
 
@@ -17,7 +20,6 @@ export class MakeReservationComponent {
   groupId: any;
   generatedGroupIds: string[] = [];
   reservationForm: FormGroup;
-
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
@@ -71,6 +73,10 @@ export class MakeReservationComponent {
         start: mock_datetime.now().toISOString(),
         end: mock_datetime.now().toISOString()
       };
+      const ambassadorRequest: AmbassadorGroupReservation = {
+        group_id: this.groupId,
+        status: false
+      };
 
       this.coworkingService.draftGroupReservation(request).subscribe(
         (response) => {
@@ -84,7 +90,22 @@ export class MakeReservationComponent {
           // You may want to show an error message to the user or perform other actions here
         }
       );
-      // Make the backend request
+
+      this.coworkingService
+        .draftAmbassadorGroupReservation(ambassadorRequest)
+        .subscribe(
+          (response) => {
+            console.log(ambassadorRequest);
+            // Handle successful response from the backend
+            console.log('Reservation submitted successfully:', response);
+            // You may want to update your UI or perform other actions here
+          },
+          (error) => {
+            // Handle error from the backend
+            console.error('Error submitting reservation:', error);
+            // You may want to show an error message to the user or perform other actions here
+          }
+        ); // Make the backend request
       this.generatedGroupIds.push(this.generateRandomGroupId()); // Store generated group ID
       this.groupService.setGroupIds([this.generateRandomGroupId()]); // Share group ID with the service
       this.users = [];

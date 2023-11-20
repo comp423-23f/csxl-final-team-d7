@@ -26,6 +26,6 @@ ambassador_reservation_table = Table(
         ForeignKey("coworking__group.id"),  # Update the ForeignKey as needed
         primary_key=True,
     ),
-    Column("status", Boolean, nullable=False),
+    Column("status", String, nullable=False),
     PrimaryKeyConstraint("coworking__ambassadorgroupreservation.id"),
 )

@@ -1,4 +1,3 @@
-<!-- checkin-reservation.component.html -->
 <div>
   <h2>Reservation</h2>
   <table class="outlined-table" style="border: 2px solid rgb(1, 175, 233)">
@@ -6,28 +5,25 @@
       <tr>
         <th style="border: 1px solid rgb(1, 175, 233)">Group ID</th>
         <th style="border: 1px solid rgb(1, 175, 233)">CheckIn Status</th>
-        <!-- Added a new column for the button -->
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="border: 1px solid rgb(1, 175, 233)">{{ groupIds }}</td>
-        <td style="border: 1px solid rgb(1, 175, 233)">
-          <!-- Use ngIf to conditionally display either Check-In or Check-Out button -->
-          <button
-            *ngIf="isCheckInMode"
-            (click)="handleCheckIn()"
-            class="light-green-button">
-            Check-In
-          </button>
-          <button
-            *ngIf="!isCheckInMode"
-            (click)="handleCheckOut()"
-            class="light-red-button">
-            Check-Out
-          </button>
-        </td>
-      </tr>
+      <!-- Use *ngFor to loop through the dataArray and create a row for each object -->
+      <ng-container *ngFor="let data of ambassGroups">
+        <!-- Use ngIf to conditionally display the entire row based on the status -->
+        <tr *ngIf="!data.status">
+          <td style="border: 1px solid rgb(1, 175, 233)">{{ data.group_id }}</td>
+          <td style="border: 1px solid rgb(1, 175, 233)">
+            <!-- Use ngIf to conditionally display either Check-In or Check-Out button -->
+            <button
+              *ngIf="isCheckInMode"
+              (click)="handleCheckIn(data.group_id)"
+              class="light-green-button">
+              Check-In
+            </button>
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>
@@ -38,12 +34,25 @@
     <thead>
       <tr>
         <th style="border: 1px solid rgb(1, 175, 233)">Group ID</th>
+        <th style="border: 1px solid rgb(1, 175, 233)">Actions</th> <!-- New column for buttons -->
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="border: 1px solid rgb(1, 175, 233)">{{ groupIds }}</td>
-      </tr>
+      <!-- Use *ngFor to loop through the dataArray and create a row for each object -->
+      <ng-container *ngFor="let data of ambassGroups">
+        <!-- Use ngIf to conditionally display the row based on the status -->
+        <tr *ngIf="data.status">
+          <td style="border: 1px solid rgb(1, 175, 233)">{{ data.group_id }}</td>
+          <!-- Second column for Check-Out button -->
+          <td style="border: 1px solid rgb(1, 175, 233)">
+            <button
+              (click)="handleCheckOut(data.group_id)"
+              class="light-red-button">
+              Check-Out
+            </button>
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>

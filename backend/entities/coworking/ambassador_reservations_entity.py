@@ -26,7 +26,7 @@ class AmbassadorReservationEntity(EntityBase):
 
     group_id = mapped_column(String, primary_key=True)
 
-    status = mapped_column(Boolean, nullable=False)
+    status = mapped_column(String, nullable=False)
 
     def to_model(self) -> AmbassadorReservation:
         """Converts the entity to a model.
