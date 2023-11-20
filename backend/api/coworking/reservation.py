@@ -81,7 +81,7 @@ def get_group_reservation(
 @api.get("/get_ambass_group_reservations", tags=["Coworking"])
 def get_ambass_group_reservations(
     reservation_svc: ReservationService = Depends(),
-) -> List[AmbassadorReservationEntity]:
+) -> List[AmbassadorReservation]:
     return reservation_svc.get_ambass_group_reservations()
 
 

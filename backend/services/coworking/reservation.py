@@ -506,19 +506,22 @@ class ReservationService:
         if reservation_entity:
             return reservation_entity.to_model()
         else:
+     
             raise ValueError("NOTFOUND")
 
-    def get_ambass_group_reservations(self) -> List[AmbassadorReservationEntity]:
-        reservation_entity = (
-            self._session.query(AmbassadorReservationEntity)
-            .filter_by(group_id=groupId)
-            .all()
-        )
+    
+    # Your method
+    def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
+        reservation_entity_list = self._session.query(AmbassadorReservationEntity).all()
+        
+        
+        # Use map with a conversion function
 
-        if reservation_entity:
-            return reservation_entity
+        if reservation_list:
+            return [entity.to_model() for entity in reservation_entity_list]
         else:
             raise ValueError("NOTFOUND")
+
 
     def delete_group_reservation(self, groupId: str):
         reservation_entity = {
