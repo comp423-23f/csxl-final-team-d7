@@ -512,10 +512,7 @@ class ReservationService:
         existing_ambass_group.status = new_ambass_group.status
 
         try:
-            # Check if a transaction is already in progress
-            if not self._session.transaction:
-                with self._session.begin():
-                    self._session.commit()
+            self._session.commit()
         except Exception as e:
             # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
             self._session.rollback()
