@@ -498,31 +498,31 @@ class ReservationService:
         return draft.to_model()
 
 
-def update_ambassador_group_reservation(
-    self, group_id: str, new_ambass_group: AmbassadorReservation
-) -> AmbassadorReservation:
-    # Fetch the existing reservation from the database
-    existing_ambass_group = (
-        self._session.query(AmbassadorReservationEntity)
-        .filter_by(group_id=group_id)
-        .first()
-    )
+    def update_ambassador_group_reservation(
+        self, group_id: str, new_ambass_group: AmbassadorReservation
+    ) -> AmbassadorReservation:
+        # Fetch the existing reservation from the database
+        existing_ambass_group = (
+            self._session.query(AmbassadorReservationEntity)
+            .filter_by(group_id=group_id)
+            .first()
+        )
 
-    # Update the properties based on the new data
-    existing_ambass_group.status = new_ambass_group.status
+        # Update the properties based on the new data
+        existing_ambass_group.status = new_ambass_group.status
 
-    try:
-        # Check if a transaction is already in progress
-        if not self._session.transaction:
-            with self._session.begin():
-                self._session.commit()
-    except Exception as e:
-        # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
-        self._session.rollback()
-        raise e
+        try:
+            # Check if a transaction is already in progress
+            if not self._session.transaction:
+                with self._session.begin():
+                    self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise e
 
-    # Return the updated reservation as a model
-    return existing_ambass_group.to_model()
+            # Return the updated reservation as a model
+        return existing_ambass_group.to_model()
 
     def get_group_reservation(self, groupId: str) -> GroupReservation:
         reservation_entity = (
