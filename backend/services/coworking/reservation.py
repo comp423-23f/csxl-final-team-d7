@@ -497,6 +497,31 @@ class ReservationService:
 
         return draft.to_model()
 
+
+    def update_ambassador_group_reservation(
+        self, group_id: str, new_ambass_group: AmbassadorReservation
+    ) -> AmbassadorReservation:
+        # Fetch the existing reservation from the database
+        existing_ambass_group = self._session.query(AmbassadorReservationEntity).filter_by(group_id=group_id).first()
+
+        if not existing_ambass_group:
+            raise HTTPException(status_code=404, detail="Ambassador Group Reservation not found")
+
+        # Update the properties based on the new data
+        existing_ambass_group.status = new_ambass_group.status
+
+        try:
+            with self._session.begin():
+                 self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise HTTPException(status_code=500, detail="Internal Server Error")
+
+        # Return the updated reservation as a model
+        return existing_ambass_group.to_model()
+
+
     def get_group_reservation(self, groupId: str) -> GroupReservation:
         reservation_entity = (
             self._session.query(GroupReservationEntity)

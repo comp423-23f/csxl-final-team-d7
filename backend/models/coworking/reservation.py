@@ -62,10 +62,4 @@ class GroupReservation(BaseModel):
 
 class AmbassadorReservation(BaseModel):
     group_id: str = ""
-    status: str
-
-
-class AmbassadorReservation(BaseModel):
-    group_id: str = ""
-    status: str
-
+    status: bool = False

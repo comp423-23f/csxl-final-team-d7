@@ -95,6 +95,16 @@ def update_reservation(
     return reservation_svc.change_reservation(subject, reservation)
 
 
+@api.put("/ambass_group_reservation/{group_id}", tags=["Coworking"])
+def update_ambassador_group_reservation(
+    group_id: str,
+    new_ambass_group: AmbassadorReservation,  # Assuming AmbassadorGroupReservation is a Pydantic model
+    ambass_group_svc: ReservationService = Depends(),
+) -> AmbassadorReservation:
+    """Modify an ambassador group reservation."""
+    return ambass_group_svc.update_ambassador_group_reservation(group_id, new_ambass_group)
+
+
 @api.delete("/reservation/{id}", tags=["Coworking"])
 def cancel_reservation(
     id: int,

@@ -20,7 +20,6 @@ export class MakeReservationComponent {
   groupId: any;
   generatedGroupIds: string[] = [];
   reservationForm: FormGroup;
-
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
@@ -76,7 +75,7 @@ export class MakeReservationComponent {
       };
       const ambassadorRequest: AmbassadorGroupReservation = {
         group_id: this.groupId,
-        status: '0'
+        status: false
       };
 
       this.coworkingService.draftGroupReservation(request).subscribe(
@@ -96,6 +95,7 @@ export class MakeReservationComponent {
         .draftAmbassadorGroupReservation(ambassadorRequest)
         .subscribe(
           (response) => {
+            console.log(ambassadorRequest);
             // Handle successful response from the backend
             console.log('Reservation submitted successfully:', response);
             // You may want to update your UI or perform other actions here

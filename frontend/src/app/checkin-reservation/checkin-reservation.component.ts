@@ -12,7 +12,7 @@ import { AmbassadorGroupReservation } from '../coworking/coworking.models';
 export class GroupListComponent implements OnInit {
   groupIds: string[] = [];
   isCheckInMode: boolean = true; // Track whether it's check-in or check-out
-  private ambassGroups: AmbassadorGroupReservation[] = [];
+  public ambassGroups: AmbassadorGroupReservation[] = [];
   constructor(private groupService: GroupService) {}
 
   public static Route = {
@@ -32,15 +32,19 @@ export class GroupListComponent implements OnInit {
     );
   }
 
-  handleCheckIn() {
-    // Add logic for handling Check-In
-    // For example, you might want to update the reservation state
-    // or perform any other necessary actions
-    console.log('Check-In clicked');
-    this.isCheckInMode = false; // Switch to Check-Out mode
+  handleCheckIn(x: string) {
+    this.groupService.checkInGroup(x).subscribe(
+      (data: AmbassadorGroupReservation) => {
+        this.ambassGroups = [data]; // Wrap the single object in an array
+        console.log(data, 'this is data');
+      },
+      (error) => {
+        console.error('Error checking in the ambassador group:', error);
+      }
+    );
   }
 
-  handleCheckOut() {
+  handleCheckOut(x: string) {
     // Add logic for handling Check-Out
     // For example, you might want to update the reservation state
     // or perform any other necessary actions

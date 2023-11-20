@@ -25,4 +25,16 @@ export class GroupService {
       '/api/coworking/get_ambass_group_reservations'
     );
   }
+
+  checkInGroup(x: string) {
+    const newAmbassGroup: AmbassadorGroupReservation = {
+      group_id: x,
+      status: true
+    };
+
+    return this.http.put<AmbassadorGroupReservation>(
+      '/api/coworking/ambass_group_reservation/${x}',
+      newAmbassGroup
+    );
+  }
 }
