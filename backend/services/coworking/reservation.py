@@ -5,6 +5,15 @@ from datetime import datetime, timedelta
 from random import random
 from typing import Sequence
 from sqlalchemy.orm import Session, joinedload
+from backend.entities.coworking.group_reservation_entity import GroupReservationEntity
+from backend.entities.coworking.ambassador_reservations_entity import (
+    AmbassadorReservationEntity,
+)
+
+from typing import List
+
+from backend.models.coworking.reservation import GroupReservation, AmbassadorReservation
+
 from ...database import db_session
 from ...models.user import User, UserIdentity
 from ..exceptions import UserPermissionException, ResourceNotFoundException
@@ -39,6 +48,8 @@ class ReservationException(Exception):
 class ReservationService:
     """ReservationService is the access layer to managing reservations for seats and rooms."""
 
+    global group_reservations
+
     def __init__(
         self,
         session: Session = Depends(db_session),
@@ -57,6 +68,7 @@ class ReservationService:
         self._policy_svc = policy_svc
         self._operating_hours_svc = operating_hours_svc
         self._seat_svc = seats_svc
+        self.group_reservations = {}
 
     def get_reservation(self, subject: User, id: int) -> Reservation:
         """Lookup a reservation by ID.
@@ -294,13 +306,13 @@ class ReservationService:
         reservations = self.get_seat_reservations(seats, reservation_range)
 
         # Subtract all seat reservations from their availability
-        self._remove_reservations_from_availability(
+        self._remove_reservations_from_availability(  # type: ignore
             seat_availability_dict, reservations
         )
 
         # Remove seats with availability below threshold
         available_seats: list[SeatAvailability] = list(
-            self._prune_seats_below_availability_threshold(
+            self._prune_seats_below_availability_threshold(  # type: ignore
                 list(seat_availability_dict.values()),
                 self._policy_svc.minimum_reservation_duration()
                 - MINUMUM_RESERVATION_EPSILON,
@@ -348,11 +360,6 @@ class ReservationService:
                 * Limit users and seats counts to policy
             * Clean-up / Refactor Implementation
         """
-        # For the time being, reservations are limited to one user. As soon as
-        # possible, we'd like to add multi-user reservations so that pairs and teams
-        # can be simplified.
-        if len(request.users) > 1:
-            raise NotImplementedError("Multi-user reservations not yet supproted.")
 
         # Enforce Reservation Draft Permissions
         if subject.id not in [user.id for user in request.users]:
@@ -449,6 +456,115 @@ class ReservationService:
         self._session.add(draft)
         self._session.commit()
         return draft.to_model()
+
+    def draft_group_reservation(self, request: GroupReservation) -> GroupReservation:
+        current_time = datetime.now()
+
+        draft = GroupReservationEntity(
+            group_id=request.group_id,
+            users=request.users,
+            when=current_time,
+            what=request.what,
+        )
+
+        try:
+            with self._session.begin():
+                self._session.add(draft)
+                self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise e
+
+        print(draft.to_model())
+
+        return draft.to_model()
+
+    def draft_ambassador_group_reservation(
+        self, request: AmbassadorReservation
+    ) -> AmbassadorReservation:
+        draft = AmbassadorReservationEntity(group_id=request.group_id, status=False)
+        try:
+            with self._session.begin():
+                self._session.add(draft)
+                self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise e
+
+        print(draft.to_model())
+
+        return draft.to_model()
+
+
+    def update_ambassador_group_reservation(
+        self, group_id: str, new_ambass_group: AmbassadorReservation
+    ) -> AmbassadorReservation:
+        # Fetch the existing reservation from the database
+        existing_ambass_group = (
+            self._session.query(AmbassadorReservationEntity)
+            .filter_by(group_id=group_id)
+            .first()
+        )
+
+        # Update the properties based on the new data
+        existing_ambass_group.status = new_ambass_group.status
+
+        try:
+            self._session.commit()
+        except Exception as e:
+            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+            self._session.rollback()
+            raise e
+
+            # Return the updated reservation as a model
+        return existing_ambass_group.to_model()
+
+    def get_group_reservation(self, groupId: str) -> GroupReservation:
+        reservation_entity = (
+            self._session.query(GroupReservationEntity)
+            .filter_by(group_id=groupId)
+            .first()
+        )
+        if reservation_entity:
+            return reservation_entity.to_model()
+        else:
+            raise ValueError("NOTFOUND")
+
+    # Your method
+    def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
+        reservation_entity_list = self._session.query(AmbassadorReservationEntity).all()
+
+        if reservation_entity_list:
+            return [entity.to_model() for entity in reservation_entity_list]
+        else:
+            raise ValueError("NOTFOUND")
+
+    def delete_group_reservation(self, groupId: str):
+        reservation_entity = {
+            self._session.query(GroupReservationEntity)
+            .filter_by(group_id=groupId)
+            .first()
+        }
+
+        if reservation_entity:
+            self._session.delete(reservation_entity)
+            self._session.commit()
+        else:
+            raise ValueError("No group reservation with this ID exists.")
+
+    # def update_group_reservation(self, groupId: str, updated_data: dict) -> Union[GroupReservation, None]:
+    #     reservation_entity = {
+    #         self._session.query(GroupReservationEntity).filter_by(group_id=groupId).first()
+    #     }
+
+    #     if reservation_entity:
+    #         for key, value in updated_data.items():
+    #             setattr(reservation_entity, key, value)
+
+    #         self._session.commit()
+    #         return reservation_entity
 
     def change_reservation(
         self, subject: User, delta: ReservationPartial

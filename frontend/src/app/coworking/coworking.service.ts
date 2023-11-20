@@ -4,11 +4,14 @@ import { Observable, Subscription, map, tap } from 'rxjs';
 import {
   CoworkingStatus,
   CoworkingStatusJSON,
+  GroupReservation,
+  GroupReservationJSON,
   Reservation,
   ReservationJSON,
   SeatAvailability,
   parseCoworkingStatusJSON,
-  parseReservationJSON
+  parseReservationJSON,
+  AmbassadorGroupReservation
 } from './coworking.models';
 import { ProfileService } from '../profile/profile.service';
 import { Profile } from '../models.module';
@@ -65,5 +68,27 @@ export class CoworkingService implements OnDestroy {
     return this.http
       .post<ReservationJSON>('/api/coworking/reservation', reservation)
       .pipe(map(parseReservationJSON));
+  }
+
+  draftGroupReservation(groupReservation: GroupReservation) {
+    // Add any validation logic for the group registration here
+
+    // Assuming your backend endpoint for group registration is "/api/group_registration"
+    return this.http.post<GroupReservationJSON>(
+      '/api/coworking/group_reservation',
+      groupReservation
+    );
+  }
+
+  draftAmbassadorGroupReservation(
+    ambassadorGroupReservation: AmbassadorGroupReservation
+  ) {
+    // Add any validation logic for the group registration here
+
+    // Assuming your backend endpoint for group registration is "/api/group_registration"
+    return this.http.post<AmbassadorGroupReservation>(
+      '/api/coworking/ambassador_group_reservation',
+      ambassadorGroupReservation
+    );
   }
 }

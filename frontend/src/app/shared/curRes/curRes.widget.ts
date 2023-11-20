@@ -10,6 +10,6 @@ export class CurrentResComponent {
   constructor(private router: Router) {}
   /** Button within the widget to navigate to input fields comp */
   navigateToOtherScreen() {
-    this.router.navigate(['/other-screen']); //ADD NECESSARY ROUTAGE
+    this.router.navigate(['/checkin-reservation']); //ADD NECESSARY ROUTAGE
   }
 }

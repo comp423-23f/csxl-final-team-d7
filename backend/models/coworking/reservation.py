@@ -51,3 +51,15 @@ class ReservationDetails(Reservation):
     extendable: bool = False
     extendable_at: datetime | None
     extendable_until: datetime | None
+
+
+class GroupReservation(BaseModel):
+    group_id: str = ""
+    users: list[str] = []
+    when: datetime | None = None
+    what: str = ""
+
+
+class AmbassadorReservation(BaseModel):
+    group_id: str = ""
+    status: bool = False
