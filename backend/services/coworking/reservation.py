@@ -498,29 +498,32 @@ class ReservationService:
         return draft.to_model()
 
 
-    def update_ambassador_group_reservation(
-        self, group_id: str, new_ambass_group: AmbassadorReservation
-    ) -> AmbassadorReservation:
-        # Fetch the existing reservation from the database
-        existing_ambass_group = self._session.query(AmbassadorReservationEntity).filter_by(group_id=group_id).first()
+def update_ambassador_group_reservation(
+    self, group_id: str, new_ambass_group: AmbassadorReservation
+) -> AmbassadorReservation:
+    # Fetch the existing reservation from the database
+    existing_ambass_group = (
+        self._session.query(AmbassadorReservationEntity)
+        .filter_by(group_id=group_id)
+        .first()
+    )
 
-        if not existing_ambass_group:
-            raise HTTPException(status_code=404, detail="Ambassador Group Reservation not found")
 
-        # Update the properties based on the new data
-        existing_ambass_group.status = new_ambass_group.status
+    # Update the properties based on the new data
+    existing_ambass_group.status = new_ambass_group.status
 
-        try:
+    try:
+        # Check if a transaction is already in progress
+        if not self._session.transaction:
             with self._session.begin():
-                 self._session.commit()
-        except Exception as e:
-            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
-            self._session.rollback()
-            raise HTTPException(status_code=500, detail="Internal Server Error")
+                self._session.commit()
+    except Exception as e:
+        # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
+        self._session.rollback()
+        raise e
 
-        # Return the updated reservation as a model
-        return existing_ambass_group.to_model()
-
+    # Return the updated reservation as a model
+    return existing_ambass_group.to_model()
 
     def get_group_reservation(self, groupId: str) -> GroupReservation:
         reservation_entity = (
@@ -536,7 +539,7 @@ class ReservationService:
     # Your method
     def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
         reservation_entity_list = self._session.query(AmbassadorReservationEntity).all()
-       
+
         if reservation_entity_list:
             return [entity.to_model() for entity in reservation_entity_list]
         else:

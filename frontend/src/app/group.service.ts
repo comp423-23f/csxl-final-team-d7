@@ -33,7 +33,7 @@ export class GroupService {
     };
 
     return this.http.put<AmbassadorGroupReservation>(
-      '/api/coworking/ambass_group_reservation/${x}',
+      `/api/coworking/ambass_group_reservation/${x}`,
       newAmbassGroup
     );
   }
