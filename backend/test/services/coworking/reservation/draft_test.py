@@ -395,3 +395,26 @@ def test_get_group_reservation_success(reservation_svc: ReservationService):
     assert result.users == group_reservation_request.users  # Check this assertion
     assert result.what == group_reservation_request.what
     assert result.when == fixed_time  # Compare with the fixed time
+
+def test_draft_group_reservation_exception(reservation_svc: ReservationService):
+    """
+    Test handling of exceptions in drafting a group reservation.
+    """
+    # Create an invalid GroupReservation request
+    invalid_group_reservation_request = GroupReservation(
+        group_id="",
+        users=["invalid"],  # Invalid PID
+        what="",
+        when=None,  # Invalid datetime
+    )
+
+    # Expect the function to raise an exception
+    with pytest.raises(Exception) as excinfo:
+        reservation_svc.draft_group_reservation(invalid_group_reservation_request)
+
+    # Check if the correct exception is raised
+    assert isinstance(excinfo.value, ValueError)  # Replace with expected exception type
+
+
+
+
