@@ -542,11 +542,11 @@ class ReservationService:
             raise ValueError("NOTFOUND")
 
     def delete_group_reservation(self, groupId: str):
-        reservation_entity = {
+        reservation_entity = (
             self._session.query(GroupReservationEntity)
             .filter_by(group_id=groupId)
             .first()
-        }
+        )
 
         if reservation_entity:
             self._session.delete(reservation_entity)
@@ -554,17 +554,6 @@ class ReservationService:
         else:
             raise ValueError("No group reservation with this ID exists.")
 
-    # def update_group_reservation(self, groupId: str, updated_data: dict) -> Union[GroupReservation, None]:
-    #     reservation_entity = {
-    #         self._session.query(GroupReservationEntity).filter_by(group_id=groupId).first()
-    #     }
-
-    #     if reservation_entity:
-    #         for key, value in updated_data.items():
-    #             setattr(reservation_entity, key, value)
-
-    #         self._session.commit()
-    #         return reservation_entity
 
     def change_reservation(
         self, subject: User, delta: ReservationPartial
