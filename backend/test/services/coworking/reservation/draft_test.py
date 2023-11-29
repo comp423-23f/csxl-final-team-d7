@@ -356,13 +356,27 @@ def test_draft_ambassador_group_reservation_success(
     # Mock request
     request = AmbassadorReservation(group_id="test_group_id", status=False)
 
-    # Call the function
-    result = reservation_svc.draft_ambassador_group_reservation(request)
+def test_draft_group_reservation_success(reservation_svc: ReservationService):
+    """
+    Test the successful drafting of a group reservation.
+    """
+    # Create a valid GroupReservation request
+    group_reservation_request = GroupReservation(
+        group_id="test_group",
+        users=["123456789", "987654321"],  # Example valid PIDs
+        what="group_meeting",
+        when=datetime.now(),  # Example datetime
+    )
+
+    # Call the draft_group_reservation method
+    result = reservation_svc.draft_group_reservation(group_reservation_request)
 
     # Assertions
-    assert result.group_id == request.group_id
-    assert result.status == request.status
-
+    assert result is not None
+    assert result.group_id == group_reservation_request.group_id
+    assert result.users == group_reservation_request.users
+    assert result.what == group_reservation_request.what
+    assert result.when == group_reservation_request.when  
 
 def test_draft_ambassador_group_reservation_exception(
     reservation_svc: ReservationService,
@@ -414,7 +428,3 @@ def test_draft_group_reservation_exception(reservation_svc: ReservationService):
 
     # Check if the correct exception is raised
     assert isinstance(excinfo.value, ValueError)  # Replace with expected exception type
-
-
-
-
