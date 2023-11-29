@@ -1,55 +1,108 @@
+/* Resetting default browser styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif; /* Change to your preferred font */
+}
+
+/* Full-screen card styling */
 .card {
-    max-width: 400px;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #f4f4f4; /* Change to the background color of your choice */
+}
+
+/* Form styling */
+form {
+  width: 100%;
+  max-width: 800px; /* You can adjust max-width as per your design requirement */
+}
+
+/* Form field styling */
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="text"] {
+  width: calc(100% - 22px); /* Adjusting for padding */
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Button styling */
+.button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  background-color: #4CAF50; /* Change to your button's color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #367c39; /* Darker shade of button color on hover */
+}
+
+/* Added users list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  background-color: #eee;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+
+/* Group ID display styling */
+.groupId {
+  padding: 10px;
+  background-color: #ddd; /* Change to match your color scheme */
+  margin-top: 20px;
+  border-radius: 4px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Apply the same styles to select elements */
+select {
+  width: calc(100% - 22px); /* Adjusting for padding */
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* You might need to add some padding on the right to ensure the text doesn't overlap with the background image */
+select {
+  padding-right: 30px; /* Adjust as needed */
+}
+
+/* Media query for larger screens */
+@media (min-width: 1024px) {
+  .card {
+    padding: 40px;
   }
-  
-  h2 {
-    text-align: center;
+
+  .button {
+    max-width: 200px; /* Fixed width for larger screens */
   }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 7px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  h3 {
-    margin-top: 20px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 5px;
-  }
-  
-  .groupId {
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
+}

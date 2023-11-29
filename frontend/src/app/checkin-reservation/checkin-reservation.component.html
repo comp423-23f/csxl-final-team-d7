@@ -12,7 +12,9 @@
       <ng-container *ngFor="let data of ambassGroups">
         <!-- Use ngIf to conditionally display the entire row based on the status -->
         <tr *ngIf="!data.status">
-          <td style="border: 1px solid rgb(1, 175, 233)">{{ data.group_id }}</td>
+          <td style="border: 1px solid rgb(1, 175, 233)">
+            {{ data.group_id }}
+          </td>
           <td style="border: 1px solid rgb(1, 175, 233)">
             <!-- Use ngIf to conditionally display either Check-In or Check-Out button -->
             <button
@@ -34,7 +36,8 @@
     <thead>
       <tr>
         <th style="border: 1px solid rgb(1, 175, 233)">Group ID</th>
-        <th style="border: 1px solid rgb(1, 175, 233)">Actions</th> <!-- New column for buttons -->
+        <th style="border: 1px solid rgb(1, 175, 233)">Actions</th>
+        <!-- New column for buttons -->
       </tr>
     </thead>
     <tbody>
@@ -42,7 +45,9 @@
       <ng-container *ngFor="let data of ambassGroups">
         <!-- Use ngIf to conditionally display the row based on the status -->
         <tr *ngIf="data.status">
-          <td style="border: 1px solid rgb(1, 175, 233)">{{ data.group_id }}</td>
+          <td style="border: 1px solid rgb(1, 175, 233)">
+            {{ data.group_id }}
+          </td>
           <!-- Second column for Check-Out button -->
           <td style="border: 1px solid rgb(1, 175, 233)">
             <button

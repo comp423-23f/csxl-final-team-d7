@@ -14,7 +14,11 @@
         <div>
           <label for="pid">PID:</label>
           <input type="text" id="pid" formControlName="pid" required />
-          <button type="button" value="Add User" (click)="onAddUser()">
+          <button
+            type="button"
+            value="Add User"
+            class="button"
+            (click)="onAddUser()">
             Add User
           </button>
         </div>
@@ -26,7 +30,10 @@
 
         <div>
           <label for="what">What:</label>
-          <input type="text" id="what" formControlName="what" required />
+          <select id="what" formControlName="what" required>
+            <option value="rectangle">Rectangle</option>
+            <option value="square">Square</option>
+          </select>
         </div>
 
         <div>
