@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -14,12 +14,13 @@ import { GroupService } from 'src/app/group.service';
   templateUrl: './make-reservation.component.html',
   styleUrls: ['./make-reservation.component.css']
 })
-export class MakeReservationComponent {
+export class MakeReservationComponent implements OnInit {
   users: any[] = []; // Array to store added users
   userGroups: { [groupId: string]: string[] } = {};
   groupId: any;
   generatedGroupIds: string[] = [];
   reservationForm: FormGroup;
+  seats: { rectangle: string; square: string } | undefined;
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
@@ -37,6 +38,22 @@ export class MakeReservationComponent {
     path: 'make-reservation',
     component: MakeReservationComponent
   };
+
+  ngOnInit(): void {
+    this.getSeatCounts();
+  }
+
+  getSeatCounts(): void {
+    this.coworkingService.getSeats().subscribe(
+      (data: { rectangle: string; square: string }) => {
+        this.seats = data;
+        console.log('MADE IT IN THE GET SEAT COUNTS');
+      },
+      (error) => {
+        console.error('There was an error!', error);
+      }
+    );
+  }
 
   onAddUser() {
     const pid = this.reservationForm.get('pid')?.value;
