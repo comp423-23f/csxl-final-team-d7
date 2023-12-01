@@ -37,18 +37,19 @@ export class GroupListComponent implements OnInit {
       (data: AmbassadorGroupReservation) => {
         this.ambassGroups = [data]; // Wrap the single object in an array
         console.log(data, 'this is data');
+        location.reload();
       },
       (error) => {
         console.error('Error checking in the ambassador group:', error);
       }
     );
   }
-     
   handleCheckOut(x: string) {
     this.groupService.checkOutGroup(x).subscribe(
       (data: AmbassadorGroupReservation) => {
         this.ambassGroups = [data]; // Wrap the single object in an array
         console.log(data, 'this is data');
+        location.reload();
       },
       (error) => {
         console.error('Error checking in the ambassador group:', error);
