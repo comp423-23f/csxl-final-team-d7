@@ -43,12 +43,16 @@ export class GroupListComponent implements OnInit {
       }
     );
   }
-
+     
   handleCheckOut(x: string) {
-    // Add logic for handling Check-Out
-    // For example, you might want to update the reservation state
-    // or perform any other necessary actions
-    console.log('Check-Out clicked');
-    this.isCheckInMode = true; // Switch back to Check-In mode
+    this.groupService.checkOutGroup(x).subscribe(
+      (data: AmbassadorGroupReservation) => {
+        this.ambassGroups = [data]; // Wrap the single object in an array
+        console.log(data, 'this is data');
+      },
+      (error) => {
+        console.error('Error checking in the ambassador group:', error);
+      }
+    );
   }
 }

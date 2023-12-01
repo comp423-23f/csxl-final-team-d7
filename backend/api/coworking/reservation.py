@@ -107,6 +107,17 @@ def update_ambassador_group_reservation(
     )
 
 
+@api.delete("/ambass_group_reservation/{group_id}", tags=["Coworking"])
+def delete_ambassador_group_reservation(
+    group_id: str,
+    ambass_group_svc: ReservationService = Depends(),
+):
+    """Modify an ambassador group reservation."""
+    return ambass_group_svc.delete_ambassador_group_reservation(
+        group_id
+    )
+
+
 @api.delete("/reservation/{id}", tags=["Coworking"])
 def cancel_reservation(
     id: int,
