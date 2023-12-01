@@ -29,6 +29,7 @@ form {
 label {
   display: block;
   margin-top: 10px;
+  font-weight: bold; /* Make labels bold */
 }
 
 input[type="text"] {
@@ -52,10 +53,18 @@ input[type="text"] {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s;
+  display: block;
+}
+
+/* Tar Heel Blue styling for the Submit button */
+.button.tar-heel-blue {
+  background-color: #4b9cd3; /* UNC Chapel Hill Tar Heel Blue */
+  color: white; /* Text color to ensure readability */
+  /* You can add more styles as needed */
 }
 
 .button:hover {
-  background-color: #367c39; /* Darker shade of button color on hover */
+  background-color: #4a4ae1; /* Darker shade of button color on hover */
 }
 
 /* Added users list styling */
@@ -105,4 +114,12 @@ select {
   .button {
     max-width: 200px; /* Fixed width for larger screens */
   }
+}
+.bold-label {
+  font-weight: bold;
+}
+/* Add margin to space between label and time */
+label {
+  display: inline-block;
+  margin-right: 5px; /* Adjust as needed */
 }
