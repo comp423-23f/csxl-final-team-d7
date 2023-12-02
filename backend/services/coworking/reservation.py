@@ -4,6 +4,7 @@ from fastapi import Depends
 from datetime import datetime, timedelta
 from random import random
 from typing import Sequence
+from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 from backend.entities.coworking.group_reservation_entity import GroupReservationEntity
 from backend.entities.coworking.ambassador_reservations_entity import (
@@ -497,7 +498,6 @@ class ReservationService:
 
         return draft.to_model()
 
-
     def update_ambassador_group_reservation(
         self, group_id: str, new_ambass_group: AmbassadorReservation
     ) -> AmbassadorReservation:
@@ -532,7 +532,23 @@ class ReservationService:
         else:
             raise ValueError("NOTFOUND")
 
-    # Your method
+    def get_count_seat(self):
+        rectangle_count = (
+            self._session.query(func.count(GroupReservationEntity.what))
+            .filter(GroupReservationEntity.what == "rectangle")
+            .scalar()
+        )
+
+        square_count = (
+            self._session.query(func.count(GroupReservationEntity.what))
+            .filter(GroupReservationEntity.what == "square")
+            .scalar()
+        )
+        print(rectangle_count)
+        print(square_count)
+
+        return {"rectangle": rectangle_count, "square": square_count}
+
     def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
         reservation_entity_list = self._session.query(AmbassadorReservationEntity).all()
 
@@ -553,7 +569,6 @@ class ReservationService:
             self._session.commit()
         else:
             raise ValueError("No group reservation with this ID exists.")
-
 
     def change_reservation(
         self, subject: User, delta: ReservationPartial

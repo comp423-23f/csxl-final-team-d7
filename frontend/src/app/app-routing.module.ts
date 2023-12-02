@@ -10,6 +10,7 @@ import { AboutComponent } from './about/about.component';
 import { GroupcheckinComponent } from './groupcheckin/groupcheckin.component';
 import { MakeReservationComponent } from './coworking/make-reservation/make-reservation.component';
 import { GroupListComponent } from './checkin-reservation/checkin-reservation.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 const routes: Routes = [
   HomeComponent.Route,
@@ -21,11 +22,20 @@ const routes: Routes = [
   GroupcheckinComponent.Route,
   MakeReservationComponent.Route,
   GroupListComponent.Route,
+  { path: '', component: MakeReservationComponent },
+  {
+    path: 'confirmation/:groupId/:formattedTimeRange',
+    component: ConfirmationComponent
+  },
   {
     path: 'coworking',
     title: 'Cowork in the XL',
     loadChildren: () =>
       import('./coworking/coworking.module').then((m) => m.CoworkingModule)
+  },
+  {
+    path: 'make-reservation/:currentTime',
+    component: MakeReservationComponent
   },
   {
     path: 'admin',
