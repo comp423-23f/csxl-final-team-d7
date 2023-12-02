@@ -27,6 +27,7 @@ import { EventList } from './event-list/event-list.widget';
 import { EventFilterPipe } from '../event/event-filter/event-filter.pipe';
 import { NewResComponent } from './newRes/newRes.widget';
 import { CurrentResComponent } from './curRes/curRes.widget';
+import { GroupAvailabilityComponent } from './group-availability/group-availability.widget';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CurrentResComponent } from './curRes/curRes.widget';
     EventCard,
     EventList,
     NewResComponent,
-    CurrentResComponent
+    CurrentResComponent,
+    GroupAvailabilityComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,8 @@ import { CurrentResComponent } from './curRes/curRes.widget';
     EventCard,
     EventList,
     NewResComponent,
-    CurrentResComponent
+    CurrentResComponent,
+    GroupAvailabilityComponent
   ]
 })
 export class SharedModule {}
