@@ -17,27 +17,29 @@
           <button
             type="button"
             value="Add User"
-            class="button"
+            class="button tar-heel-blue"
             (click)="onAddUser()">
             Add User
           </button>
         </div>
 
         <div>
-          <label for="when">When:</label>
-          <input type="text" id="when" formControlName="when" required />
-        </div>
-
-        <div>
           <label for="what">What:</label>
           <select id="what" formControlName="what" required>
-            <option value="rectangle">Rectangle</option>
-            <option value="square">Square</option>
+            <option value="Rectangle Table">Rectangle Table</option>
+            <option value="Square Table">Square Table</option>
           </select>
         </div>
-
+        <!-- make-reservation.component.html -->
         <div>
-          <button class="button" type="submit">Submit</button>
+          <label for="when"><span class="bold-label">When:</span></label>
+          <span>{{ formattedTimeRange }}</span>
+        </div>
+        <div>
+          <div>
+            <button class="button tar-heel-blue" type="submit">Submit</button>
+            <!-- Add the tar-heel-blue class here -->
+          </div>
         </div>
       </form>
 
@@ -47,11 +49,6 @@
         <ul>
           <li *ngFor="let user of users">{{ user }}</li>
         </ul>
-      </div>
-
-      <!-- Display the generated group ID -->
-      <div class="groupId">
-        <h3>This is your Group ID: {{ groupId }}</h3>
       </div>
     </div>
   </body>
