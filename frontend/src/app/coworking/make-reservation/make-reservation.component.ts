@@ -24,7 +24,6 @@ export class MakeReservationComponent implements OnInit {
   groupId: any;
   generatedGroupIds: string[] = [];
   reservationForm: FormGroup;
-
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
@@ -65,6 +64,22 @@ export class MakeReservationComponent implements OnInit {
     path: 'make-reservation',
     component: MakeReservationComponent
   };
+
+  ngOnInit(): void {
+    this.getSeatCounts();
+  }
+
+  getSeatCounts(): void {
+    this.coworkingService.getSeats().subscribe(
+      (data: { rectangle: string; square: string }) => {
+        this.seats = data;
+        console.log('MADE IT IN THE GET SEAT COUNTS');
+      },
+      (error) => {
+        console.error('There was an error!', error);
+      }
+    );
+  }
 
   onAddUser() {
     const pid = this.reservationForm.get('pid')?.value;

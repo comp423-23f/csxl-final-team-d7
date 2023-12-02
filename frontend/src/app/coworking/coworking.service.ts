@@ -80,12 +80,15 @@ export class CoworkingService implements OnDestroy {
     );
   }
 
+  getSeats() {
+    return this.http.get<{ rectangle: string; square: string }>(
+      '/api/coworking/get_seats'
+    );
+  }
+
   draftAmbassadorGroupReservation(
     ambassadorGroupReservation: AmbassadorGroupReservation
   ) {
-    // Add any validation logic for the group registration here
-
-    // Assuming your backend endpoint for group registration is "/api/group_registration"
     return this.http.post<AmbassadorGroupReservation>(
       '/api/coworking/ambassador_group_reservation',
       ambassadorGroupReservation
