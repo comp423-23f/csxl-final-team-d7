@@ -24,12 +24,10 @@
         </div>
 
         <div>
-          <label for="what">What:</label>
-          <select id="what" formControlName="what" required>
-            <option value="Rectangle Table">Rectangle Table</option>
-            <option value="Square Table">Square Table</option>
-          </select>
+          <label for="what"><span class="bold-label">What:</span></label>
+          <span>{{ ' ' + tableName }}</span>
         </div>
+
         <!-- make-reservation.component.html -->
         <div>
           <label for="when"><span class="bold-label">When:</span></label>
