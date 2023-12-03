@@ -9,7 +9,9 @@ import { Component } from '@angular/core';
 export class GroupAvailabilityComponent {
   constructor(private router: Router) {}
   /** Button within the widget to navigate to input fields comp */
-  navigateToOtherScreen() {
-    this.router.navigate(['/make-reservation']); //ADD NECESSARY ROUTAGE
+  navigateToOtherScreen(tableName: string) {
+    this.router.navigate(['/make-reservation'], {
+      queryParams: { what: tableName }
+    }); //ADD NECESSARY ROUTAGE
   }
 }

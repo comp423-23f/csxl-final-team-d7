@@ -23,6 +23,7 @@ export class MakeReservationComponent implements OnInit {
   userGroups: { [groupId: string]: string[] } = {};
   groupId: any;
   generatedGroupIds: string[] = [];
+  tableName: string;
   reservationForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -32,10 +33,16 @@ export class MakeReservationComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute // Add this line
   ) {
+    this.tableName = '';
     this.reservationForm = this.formBuilder.group({
       pid: '',
       when: '',
       what: ''
+    });
+
+    // Retrieve the table name from the query parameters
+    this.route.queryParams.subscribe((params) => {
+      this.tableName = params['what'];
     });
   }
   ngOnInit(): void {
@@ -65,22 +72,6 @@ export class MakeReservationComponent implements OnInit {
     component: MakeReservationComponent
   };
 
-  ngOnInit(): void {
-    this.getSeatCounts();
-  }
-
-  getSeatCounts(): void {
-    this.coworkingService.getSeats().subscribe(
-      (data: { rectangle: string; square: string }) => {
-        this.seats = data;
-        console.log('MADE IT IN THE GET SEAT COUNTS');
-      },
-      (error) => {
-        console.error('There was an error!', error);
-      }
-    );
-  }
-
   onAddUser() {
     const pid = this.reservationForm.get('pid')?.value;
     console.log(`Selected PID: ${pid}`);
@@ -109,7 +100,7 @@ export class MakeReservationComponent implements OnInit {
         group_id: this.groupId,
         users: this.users,
         when: mock_datetime.now().toISOString(),
-        what: this.reservationForm.value.what,
+        what: this.tableName,
         start: mock_datetime.now().toISOString(),
         end: mock_datetime.now().toISOString()
       };
@@ -129,7 +120,7 @@ export class MakeReservationComponent implements OnInit {
       )}`;
 
       // Include route parameters in the array
-      this.router.navigate([url, { what: this.reservationForm.value.what }]);
+      this.router.navigate([url, { what: this.tableName }]);
     }
   }
 

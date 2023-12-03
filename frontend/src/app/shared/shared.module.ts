@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /* Angular Material Modules */
@@ -25,7 +25,6 @@ import { EventCard } from './event-card/event-card.widget';
 import { RouterModule } from '@angular/router';
 import { EventList } from './event-list/event-list.widget';
 import { EventFilterPipe } from '../event/event-filter/event-filter.pipe';
-import { NewResComponent } from './newRes/newRes.widget';
 import { CurrentResComponent } from './curRes/curRes.widget';
 import { GroupAvailabilityComponent } from './group-availability/group-availability.widget';
 
@@ -35,7 +34,6 @@ import { GroupAvailabilityComponent } from './group-availability/group-availabil
     SearchBar,
     EventCard,
     EventList,
-    NewResComponent,
     CurrentResComponent,
     GroupAvailabilityComponent
   ],
@@ -63,7 +61,6 @@ import { GroupAvailabilityComponent } from './group-availability/group-availabil
     SearchBar,
     EventCard,
     EventList,
-    NewResComponent,
     CurrentResComponent,
     GroupAvailabilityComponent
   ]
