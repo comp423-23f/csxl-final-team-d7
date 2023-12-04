@@ -16,6 +16,7 @@ import {
 import { ProfileService } from '../profile/profile.service';
 import { Profile } from '../models.module';
 import { RxCoworkingStatus } from './rx-coworking-status';
+import { NumberInput } from '@angular/cdk/coercion';
 
 const ONE_HOUR = 60 * 60 * 1000;
 
@@ -79,9 +80,12 @@ export class CoworkingService implements OnDestroy {
       groupReservation
     );
   }
-
-  getSeats() {
-    return this.http.get<{ rectangle: string; square: string }>(
+  getSeats(): Observable<{
+    'round table': number;
+    'conference table': number;
+  }> {
+    console.log('made it in http');
+    return this.http.get<{ 'round table': number; 'conference table': number }>(
       '/api/coworking/get_seats'
     );
   }

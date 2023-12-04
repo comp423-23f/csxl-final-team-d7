@@ -48,7 +48,7 @@ export class GroupListComponent implements OnInit {
         var foundObject: any = this.notCheckedIn.find(
           (item) => item.group_id === x
         );
-        foundObject = {...foundObject, status: true};
+        foundObject = { ...foundObject, status: true };
         this.notCheckedIn = this.notCheckedIn.filter(
           (item) => item.group_id !== x
         );

@@ -126,12 +126,10 @@ export class MakeReservationComponent implements OnInit {
             console.log(ambassadorRequest);
             // Handle successful response from the backend
             console.log('Reservation submitted successfully:', response);
-            // You may want to update your UI or perform other actions here
           },
           (error) => {
             // Handle error from the backend
             console.error('Error submitting reservation:', error);
-            // You may want to show an error message to the user or perform other actions here
           }
         );
       // Construct the URL with parameters

@@ -533,21 +533,22 @@ class ReservationService:
             raise ValueError("NOTFOUND")
 
     def get_count_seat(self):
-        rectangle_count = (
+        round_count = (
             self._session.query(func.count(GroupReservationEntity.what))
-            .filter(GroupReservationEntity.what == "rectangle")
+            .filter(GroupReservationEntity.what == "Round Table")
             .scalar()
         )
 
-        square_count = (
+        conference_count = (
             self._session.query(func.count(GroupReservationEntity.what))
-            .filter(GroupReservationEntity.what == "square")
+            .filter(GroupReservationEntity.what == "Conference Table")
             .scalar()
         )
-        print(rectangle_count)
-        print(square_count)
+        print(round_count)
+        print(conference_count)
+        print("HELLO WORLD")
 
-        return {"rectangle": rectangle_count, "square": square_count}
+        return {"round table": round_count, "conference table": conference_count}
 
     def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
         reservation_entity_list = self._session.query(AmbassadorReservationEntity).all()
