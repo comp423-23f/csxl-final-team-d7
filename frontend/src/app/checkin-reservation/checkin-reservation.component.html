@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       <!-- Use *ngFor to loop through the dataArray and create a row for each object -->
-      <ng-container *ngFor="let data of ambassGroups">
+      <ng-container *ngFor="let data of notCheckedIn">
         <!-- Use ngIf to conditionally display the entire row based on the status -->
         <tr *ngIf="!data.status">
           <td style="border: 1px solid rgb(1, 175, 233)">
@@ -42,7 +42,7 @@
     </thead>
     <tbody>
       <!-- Use *ngFor to loop through the dataArray and create a row for each object -->
-      <ng-container *ngFor="let data of ambassGroups">
+      <ng-container *ngFor="let data of checkedIn">
         <!-- Use ngIf to conditionally display the row based on the status -->
         <tr *ngIf="data.status">
           <td style="border: 1px solid rgb(1, 175, 233)">
