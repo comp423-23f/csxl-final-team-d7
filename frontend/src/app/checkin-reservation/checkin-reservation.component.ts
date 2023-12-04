@@ -60,7 +60,6 @@ export class GroupListComponent implements OnInit {
       }
     );
   }
-
   handleCheckOut(x: string) {
     this.groupService.checkOutGroup(x).subscribe(
       (data: AmbassadorGroupReservation) => {

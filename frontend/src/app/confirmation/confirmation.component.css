@@ -1,0 +1,16 @@
+/* confirmation.component.css */
+
+.card {
+    width: 50%; /* Adjust the width as needed */
+    margin: auto;
+    padding: 20px;
+    text-align: center; /* Center the content inside the card */
+  }
+  
+  .confirmation-details {
+    margin-top: 20px;
+    text-align: left; /* Align text to the left */
+  }
+  
+  /* Add any additional styling as needed */
+  

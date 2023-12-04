@@ -45,8 +45,6 @@ def draft_group_reservation(
     reservation_svc: ReservationService = Depends(),
 ) -> GroupReservation:
     """Draft a reservation request."""
-    print("MADE IT IN API LAYER")
-    print("Received request", request.model_dump())
     return reservation_svc.draft_group_reservation(request)
 
 
@@ -83,6 +81,13 @@ def get_ambass_group_reservations(
     reservation_svc: ReservationService = Depends(),
 ) -> List[AmbassadorReservation]:
     return reservation_svc.get_ambass_group_reservations()
+
+
+@api.get("/get_seats", tags=["Coworking"])
+def get_seats(
+    reservation_svc: ReservationService = Depends(),
+) -> dict:
+    return reservation_svc.get_count_seat()
 
 
 @api.put("/reservation/{id}", tags=["Coworking"])
