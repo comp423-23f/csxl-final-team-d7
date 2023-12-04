@@ -570,6 +570,27 @@ class ReservationService:
         else:
             raise ValueError("No group reservation with this ID exists.")
 
+    def delete_ambassador_group_reservation(self, groupId: str):
+        reservation_entity = (
+            self._session.query(GroupReservationEntity)
+            .filter_by(group_id=groupId)
+            .first()
+        )
+
+        reservation_entity2 = (
+            self._session.query(AmbassadorReservationEntity)
+            .filter_by(group_id=groupId)
+            .first()
+        )
+
+        if reservation_entity:
+            self._session.delete(reservation_entity)
+            self._session.commit()
+            self._session.delete(reservation_entity2)
+            self._session.commit()
+        else:
+            raise ValueError("No group reservation with this ID exists.")
+
     def change_reservation(
         self, subject: User, delta: ReservationPartial
     ) -> Reservation:
