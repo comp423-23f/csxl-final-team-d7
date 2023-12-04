@@ -105,6 +105,11 @@ export class MakeReservationComponent implements OnInit {
         end: mock_datetime.now().toISOString()
       };
 
+      const ambassadorRequest: AmbassadorGroupReservation = {
+        group_id: this.groupId,
+        status: false
+      };
+
       this.coworkingService.draftGroupReservation(request).subscribe(
         (response) => {
           console.log('Reservation submitted successfully:', response);
@@ -114,6 +119,21 @@ export class MakeReservationComponent implements OnInit {
         }
       );
 
+      this.coworkingService
+        .draftAmbassadorGroupReservation(ambassadorRequest)
+        .subscribe(
+          (response) => {
+            console.log(ambassadorRequest);
+            // Handle successful response from the backend
+            console.log('Reservation submitted successfully:', response);
+            // You may want to update your UI or perform other actions here
+          },
+          (error) => {
+            // Handle error from the backend
+            console.error('Error submitting reservation:', error);
+            // You may want to show an error message to the user or perform other actions here
+          }
+        );
       // Construct the URL with parameters
       const url = `/confirmation/${this.groupId}/${encodeURIComponent(
         this.formattedTimeRange
