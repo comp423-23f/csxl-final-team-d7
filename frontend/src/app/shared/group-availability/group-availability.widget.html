@@ -17,15 +17,15 @@
       <!-- First hardcoded item -->
       <mat-list-item (click)="navigateToOtherScreen('Round Table')">
         <h3 matListItemTitle>Round Table</h3>
-        <div matListItemIcon>10</div>
+        <div matListItemIcon>{{ totalSeats - roundTableCount }}</div>
         <p matListItemLine>Availability String Here</p>
         <h3 matListItemMeta>&rsaquo;</h3>
       </mat-list-item>
-
-      <!-- Second hardcoded item -->
       <mat-list-item (click)="navigateToOtherScreen('Conference Table')">
         <h3 matListItemTitle>Conference Table</h3>
-        <div matListItemIcon class="upcoming">10</div>
+        <div matListItemIcon class="upcoming">
+          {{ totalSeats - conferenceTableCount }}
+        </div>
         <p matListItemLine>Availability String Here</p>
         <h3 matListItemMeta>&rsaquo;</h3>
       </mat-list-item>

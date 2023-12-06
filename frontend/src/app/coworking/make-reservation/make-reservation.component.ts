@@ -9,7 +9,6 @@ import {
 } from '../coworking.models';
 import { CoworkingService } from '../coworking.service';
 import { GroupService } from 'src/app/group.service';
-
 @Component({
   selector: 'app-make-reservation',
   templateUrl: './make-reservation.component.html',
@@ -66,7 +65,6 @@ export class MakeReservationComponent implements OnInit {
     )} ${ampm}`;
     return formattedTime;
   }
-
   public static Route = {
     path: 'make-reservation',
     component: MakeReservationComponent
@@ -85,7 +83,6 @@ export class MakeReservationComponent implements OnInit {
       window.alert('User added: ' + pid);
     }
   }
-
   onSubmit() {
     if (this.users.length < 2) {
       window.alert('Error: At least 2 different users must be added');
@@ -93,7 +90,6 @@ export class MakeReservationComponent implements OnInit {
       const pid = this.reservationForm.value.pid;
       const mock_datetime: any = {};
       mock_datetime.now = () => new Date(2023, 0, 1, 12, 0, 0);
-
       this.groupId = this.generateRandomGroupId();
       this.userGroups[this.groupId] = this.users;
       const request: GroupReservation = {
@@ -105,6 +101,11 @@ export class MakeReservationComponent implements OnInit {
         end: mock_datetime.now().toISOString()
       };
 
+      const ambassadorRequest: AmbassadorGroupReservation = {
+        group_id: this.groupId,
+        status: false
+      };
+
       this.coworkingService.draftGroupReservation(request).subscribe(
         (response) => {
           console.log('Reservation submitted successfully:', response);
@@ -114,6 +115,19 @@ export class MakeReservationComponent implements OnInit {
         }
       );
 
+      this.coworkingService
+        .draftAmbassadorGroupReservation(ambassadorRequest)
+        .subscribe(
+          (response) => {
+            console.log(ambassadorRequest);
+            // Handle successful response from the backend
+            console.log('Reservation submitted successfully:', response);
+          },
+          (error) => {
+            // Handle error from the backend
+            console.error('Error submitting reservation:', error);
+          }
+        );
       // Construct the URL with parameters
       const url = `/confirmation/${this.groupId}/${encodeURIComponent(
         this.formattedTimeRange

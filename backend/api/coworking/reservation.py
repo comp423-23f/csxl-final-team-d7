@@ -87,6 +87,7 @@ def get_ambass_group_reservations(
 def get_seats(
     reservation_svc: ReservationService = Depends(),
 ) -> dict:
+    print("made it in the python get")
     return reservation_svc.get_count_seat()
 
 
@@ -110,6 +111,15 @@ def update_ambassador_group_reservation(
     return ambass_group_svc.update_ambassador_group_reservation(
         group_id, new_ambass_group
     )
+
+
+@api.delete("/ambass_group_reservation/{group_id}", tags=["Coworking"])
+def delete_ambassador_group_reservation(
+    group_id: str,
+    ambass_group_svc: ReservationService = Depends(),
+):
+    """Modify an ambassador group reservation."""
+    return ambass_group_svc.delete_ambassador_group_reservation(group_id)
 
 
 @api.delete("/reservation/{id}", tags=["Coworking"])

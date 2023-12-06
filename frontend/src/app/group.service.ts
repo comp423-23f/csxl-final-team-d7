@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 export class GroupService {
   private groupIds: string[] = [];
   private ambassGroups: AmbassadorGroupReservation[] = [];
-
   public constructor(protected http: HttpClient) {}
 
   getGroupIds(): string[] {
@@ -35,6 +34,17 @@ export class GroupService {
     return this.http.put<AmbassadorGroupReservation>(
       `/api/coworking/ambass_group_reservation/${x}`,
       newAmbassGroup
+    );
+  }
+
+  checkOutGroup(x: string) {
+    const newAmbassGroup: AmbassadorGroupReservation = {
+      group_id: x,
+      status: true
+    };
+
+    return this.http.delete<AmbassadorGroupReservation>(
+      `/api/coworking/ambass_group_reservation/${x}`
     );
   }
 }
