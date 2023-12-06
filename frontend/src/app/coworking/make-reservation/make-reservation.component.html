@@ -9,6 +9,9 @@
   <body>
     <div class="card">
       <h2>Reservation Form</h2>
+      <p class="form-header">
+        Please provide a minimum of two student PIDs for your group.
+      </p>
 
       <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
         <div>

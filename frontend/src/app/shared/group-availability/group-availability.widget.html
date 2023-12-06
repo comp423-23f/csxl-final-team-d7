@@ -2,31 +2,47 @@
   <!-- Coworking Card Header -->
   <mat-card-header class="dropin-header">
     <!--  class="user-name" -->
-    <mat-card-title>Drop-in to The XL (SN156)</mat-card-title>
+    <mat-card-title>Group Reservations For The XL (SN156)</mat-card-title>
   </mat-card-header>
 
   <!-- Coworking Information -->
   <mat-card-content>
     <p>
-      The following seats are available for drop-ins. Reserve here and check-in
-      within 10 minutes.
+      The following tables are available for drop-ins. Reserve for your group
+      here and check-in within 10 minutes.
     </p>
     <!-- Coworking Dropdowns -->
     <!-- TODO: Refactor these list items to widgets? -->
     <mat-action-list>
       <!-- First hardcoded item -->
-      <mat-list-item (click)="navigateToOtherScreen('Round Table')">
+      <mat-list-item
+        (click)="onClick('Round Table')"
+        [style.opacity]="totalSeats - roundTableCount <= 0 ? '0.9' : '1'"
+        [disabled]="totalSeats - roundTableCount <= 0">
         <h3 matListItemTitle>Round Table</h3>
         <div matListItemIcon>{{ totalSeats - roundTableCount }}</div>
-        <p matListItemLine>Availability String Here</p>
+        <p matListItemLine *ngIf="totalSeats - roundTableCount <= 0">
+          Check again in 15 minutes
+        </p>
+        <p matListItemLine *ngIf="totalSeats - roundTableCount > 0">
+          Available Now
+        </p>
         <h3 matListItemMeta>&rsaquo;</h3>
       </mat-list-item>
-      <mat-list-item (click)="navigateToOtherScreen('Conference Table')">
+      <mat-list-item
+        (click)="onClick('Conference Table')"
+        [style.opacity]="totalSeats - conferenceTableCount <= 0 ? '0.9' : '1'"
+        [disabled]="totalSeats - conferenceTableCount <= 0">
         <h3 matListItemTitle>Conference Table</h3>
         <div matListItemIcon class="upcoming">
           {{ totalSeats - conferenceTableCount }}
         </div>
-        <p matListItemLine>Availability String Here</p>
+        <p matListItemLine *ngIf="totalSeats - conferenceTableCount <= 0">
+          Check again in 15 minutes
+        </p>
+        <p matListItemLine *ngIf="totalSeats - conferenceTableCount > 0">
+          Available Now
+        </p>
         <h3 matListItemMeta>&rsaquo;</h3>
       </mat-list-item>
     </mat-action-list>
