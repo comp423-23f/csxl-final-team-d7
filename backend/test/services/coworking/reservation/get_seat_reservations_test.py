@@ -2,6 +2,8 @@
 
 from unittest.mock import create_autospec
 
+from backend.models.coworking.reservation import GroupReservation
+
 from .....models.coworking import (
     Reservation,
     TimeRange,
@@ -70,3 +72,25 @@ def test_get_seat_reservations_unreserved_seats(
         seat_data.unreservable_seats, current
     )
     assert len(reservations) == 0
+
+
+def test_get_count_seat(reservation_svc: ReservationService):
+    # Call the method to get seat counts
+    fixed_time = datetime(2023, 1, 1, 12, 0, 0)  # Example fixed time
+
+    # Create a valid GroupReservation request
+    group_reservation_request = GroupReservation(
+        group_id="test_group",
+        users=["123456789", "987654321"],  # Example valid PIDs
+        what="Round Table",  # Adjust the case to match the query in get_count_seat
+        when=fixed_time,  # Example datetime
+    )
+
+    # Call the draft_group_reservation method
+    result = reservation_svc.draft_group_reservation(group_reservation_request)
+    result.when = fixed_time
+    seat_counts = reservation_svc.get_count_seat()
+    print(seat_counts)
+
+    assert seat_counts["round table"] == 1  # Assuming this is the correct case
+    assert seat_counts["conference table"] == 0

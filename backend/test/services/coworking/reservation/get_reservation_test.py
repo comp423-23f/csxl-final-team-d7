@@ -2,6 +2,8 @@
 
 from unittest.mock import create_autospec, call
 
+from backend.models.coworking.reservation import AmbassadorReservation, GroupReservation
+
 from .....services.coworking import ReservationService
 from .....services import PermissionService
 from .....models.coworking import Reservation
@@ -81,3 +83,38 @@ def test_get_reservation_enforces_permissions(reservation_svc: ReservationServic
             ),
         ]
         permission_svc.check.assert_has_calls(calls)
+
+
+def test_get_group_reservation(reservation_svc: ReservationService):
+    fixed_time = datetime(2023, 1, 1, 12, 0, 0)  # Example fixed time
+
+    # Create a valid GroupReservation request
+    group_reservation_request = GroupReservation(
+        group_id="test_group",
+        users=["123456789", "987654321"],  # Example valid PIDs
+        what="group_meeting",
+        when=fixed_time,  # Example datetime
+    )
+
+    # Call the draft_group_reservation method
+    result = reservation_svc.draft_group_reservation(group_reservation_request)
+    group_reservation_request.when = result.when
+    retrieved_reservation = reservation_svc.get_group_reservation("test_group")
+
+    assert retrieved_reservation.group_id == "test_group"
+    assert retrieved_reservation.users == ["123456789", "987654321"]
+    assert retrieved_reservation.what == "group_meeting"
+    assert retrieved_reservation.when == group_reservation_request.when
+
+
+def test_get_ambass_group_reservations(reservation_svc: ReservationService):
+    # Mock request
+    request = AmbassadorReservation(group_id="test_group_id", status=False)
+
+    # Call the function
+    reservation_svc.draft_ambassador_group_reservation(request)
+
+    result = reservation_svc.get_ambass_group_reservations()
+
+    assert result[0].group_id == "test_group_id"
+    assert result[0].status == False

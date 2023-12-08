@@ -54,8 +54,6 @@ def draft_ambassador_group_reservation(
     reservation_svc: ReservationService = Depends(),
 ) -> AmbassadorReservation:
     """Draft a reservation request."""
-    print("MADE IT Ambassador LAYER")
-    print("Received request", request.model_dump())
     return reservation_svc.draft_ambassador_group_reservation(request)
 
 
