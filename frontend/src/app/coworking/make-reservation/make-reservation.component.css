@@ -25,6 +25,12 @@ form {
   max-width: 800px; /* You can adjust max-width as per your design requirement */
 }
 
+.form-header {
+  text-align: center;
+  font-weight: normal;
+}
+
+
 /* Form field styling */
 label {
   display: block;
@@ -44,13 +50,14 @@ input[type="text"] {
 /* Button styling */
 .button {
   width: 100%;
-  padding: 15px;
+  padding: 10px; /* Reduced padding for smaller buttons */
   margin-top: 10px;
   background-color: #4CAF50; /* Change to your button's color */
   color: white;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px; /* Reduced font size for smaller buttons */
+  font-weight: bold; /* Make buttons bold */
   cursor: pointer;
   transition: background-color 0.2s;
   display: block;
@@ -115,11 +122,25 @@ select {
     max-width: 200px; /* Fixed width for larger screens */
   }
 }
+
 .bold-label {
   font-weight: bold;
 }
+
 /* Add margin to space between label and time */
 label {
   display: inline-block;
-  margin-right: 5px; /* Adjust as needed */
+  margin-right: 10px; /* Increased margin for better spacing */
+}
+
+/* Increased font size and boldness for 'What' and 'When' */
+div {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* Smaller Add User button */
+.add-user-button {
+  padding: 5px 10px; /* Adjust padding for the button */
+  font-size: 12px; /* Adjust font size for the button */
 }

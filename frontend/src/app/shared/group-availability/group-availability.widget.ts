@@ -29,4 +29,17 @@ export class GroupAvailabilityComponent {
       queryParams: { what: tableName }
     }); //ADD NECESSARY ROUTAGE
   }
+
+  onClick(tableType: string): void {
+    const count =
+      tableType === 'Round Table'
+        ? this.totalSeats - this.roundTableCount
+        : this.totalSeats - this.conferenceTableCount;
+
+    if (count > 0) {
+      // Perform navigation logic here
+      this.navigateToOtherScreen(tableType);
+    }
+    // You can add an else block if you want to handle the case when the button is disabled
+  }
 }
