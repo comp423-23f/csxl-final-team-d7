@@ -544,9 +544,6 @@ class ReservationService:
             .filter(GroupReservationEntity.what == "Conference Table")
             .scalar()
         )
-        print(round_count)
-        print(conference_count)
-        print("HELLO WORLD")
 
         return {"round table": round_count, "conference table": conference_count}
 

@@ -23,6 +23,7 @@ export class GroupAvailabilityComponent {
       this.conferenceTableCount = +response['conference table'];
     });
   }
+
   navigateToOtherScreen(tableName: string) {
     this.router.navigate(['/make-reservation'], {
       queryParams: { what: tableName }

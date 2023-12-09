@@ -11,7 +11,7 @@ from .....services.exceptions import ResourceNotFoundException
 
 from .....models.user import UserIdentity
 from .....models.coworking.seat import SeatIdentity
-from .....models.coworking.reservation import ReservationPartial
+from .....models.coworking.reservation import AmbassadorReservation, ReservationPartial
 
 # Imported fixtures provide dependencies injected for the tests as parameters.
 # Dependent fixtures (seat_svc) are required to be imported in the testing module.
@@ -196,3 +196,37 @@ def test_change_reservation_change_end_not_implemented(
                 end=reservation_data.reservation_4.end + timedelta(minutes=423),
             ),
         )
+
+
+def test_update_ambassador_group_reservation(reservation_svc: ReservationService):
+    existing_reservation_data = AmbassadorReservation(
+        group_id="test_group_id", status=False
+    )
+
+    # Call the method to create the initial reservation
+    reservation_svc.draft_ambassador_group_reservation(existing_reservation_data)
+
+    # Mock new reservation data
+    new_reservation_data = AmbassadorReservation(group_id="test_group_id", status=True)
+
+    # Call the function to update the reservation
+    updated_reservation = reservation_svc.update_ambassador_group_reservation(
+        group_id=new_reservation_data.group_id, new_ambass_group=new_reservation_data
+    )
+
+    # Assertions
+    assert updated_reservation.group_id == "test_group_id"
+    assert updated_reservation.status == True
+
+    # Fetch the updated reservation using get_ambass_group_reservations
+    all_reservations = reservation_svc.get_ambass_group_reservations()
+
+    # Find the updated reservation in the list
+    updated_reservation_model = next(
+        (res for res in all_reservations if res.group_id == "test_group_id"), None
+    )
+
+    # Additional assertions
+    assert updated_reservation_model is not None
+    assert updated_reservation_model.group_id == "test_group_id"
+    assert updated_reservation_model.status == True
