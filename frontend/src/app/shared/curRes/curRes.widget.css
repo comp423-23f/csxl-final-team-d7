@@ -1,32 +1,36 @@
-.widget-container,
-.clickable-box {
-    width: 100%;
-    height: auto;
+body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .widget-container {
+    max-width: 100%;
+    height: 80px; /* Adjust height as needed */
+    background-color: #fff; /* White background */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-}
-
-.widget-container {
-    width: 300px;
-    height: 150px;
-    background-color: #f2f2f2;
-}
-
-.clickable-box {
-    width: 205px;
-    height: 55px;
-    background-color: #5e6468;
-    color: #fff;
+    align-items: flex-start; /* Align items to the top (left) */
+    justify-content: flex-start; /* Align items to the left */
+    padding: 10px 20px; /* Adjust padding on top (10px) and sides (20px) */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01); /* Optional: Add a subtle box shadow */
+    border: 1px solid #e1e0e0; /* Add a 1px solid gray outline */
+  }
+  
+  .clickable-box {
+    display: flex;
+    flex-direction: column; /* Arrange child elements vertically */
     cursor: pointer;
-    border-radius: 20px;
-    font-size: 15px;
-}
-
-.clickable-box:hover {
-    background-color: #5e6468;
-    width: 210px;
-    height: 60px;
-    border-radius: 20px;
-}
+  }
+  
+  .title {
+    font-size: 19px; /* Adjust font size */
+    font-weight: 500; /* Make it bold */
+    margin-bottom: 5px; /* Adjust spacing between title and caption */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .caption {
+    font-size: 15px; /* Adjust font size */
+    color: #000; /* Adjust color */
+    text-align: left; /* Align text to the left */
+  }
+  
