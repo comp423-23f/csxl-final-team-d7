@@ -72,9 +72,7 @@ export class CoworkingService implements OnDestroy {
   }
 
   draftGroupReservation(groupReservation: GroupReservation) {
-    // Add any validation logic for the group registration here
-
-    // Assuming your backend endpoint for group registration is "/api/group_registration"
+    // Given a group reservation object, this service method will send a POST request to the server to draft a group reservation.
     return this.http.post<GroupReservationJSON>(
       '/api/coworking/group_reservation',
       groupReservation
@@ -84,7 +82,8 @@ export class CoworkingService implements OnDestroy {
     'round table': number;
     'conference table': number;
   }> {
-    console.log('made it in http');
+    // Given an Observable, this service method will send a GET request to
+    // the server to retrieve the total amount of seats available for each type of table.
     return this.http.get<{ 'round table': number; 'conference table': number }>(
       '/api/coworking/get_seats'
     );
@@ -93,6 +92,8 @@ export class CoworkingService implements OnDestroy {
   draftAmbassadorGroupReservation(
     ambassadorGroupReservation: AmbassadorGroupReservation
   ) {
+    // Given a Ambassador group reservation object, this service method will send a POST request
+    // to the server to draft an Ambassador group reservation id with an intial status of 'false'.
     return this.http.post<AmbassadorGroupReservation>(
       '/api/coworking/ambassador_group_reservation',
       ambassadorGroupReservation

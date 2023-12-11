@@ -459,6 +459,7 @@ class ReservationService:
         return draft.to_model()
 
     def draft_group_reservation(self, request: GroupReservation) -> GroupReservation:
+        """Given a group reservation object request, this method will send a POST request to create a reservation."""
         current_time = datetime.now()
 
         draft = GroupReservationEntity(
@@ -473,48 +474,41 @@ class ReservationService:
                 self._session.add(draft)
                 self._session.commit()
         except Exception as e:
-            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
             self._session.rollback()
             raise e
-
-        print(draft.to_model())
 
         return draft.to_model()
 
     def draft_ambassador_group_reservation(
         self, request: AmbassadorReservation
     ) -> AmbassadorReservation:
+        """Given an AmbassadorReservation object, this method will create a post request to add a group id and status to the check in table"""
         draft = AmbassadorReservationEntity(group_id=request.group_id, status=False)
         try:
             with self._session.begin():
                 self._session.add(draft)
                 self._session.commit()
         except Exception as e:
-            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
             self._session.rollback()
             raise e
-
-        print(draft.to_model())
 
         return draft.to_model()
 
     def update_ambassador_group_reservation(
         self, group_id: str, new_ambass_group: AmbassadorReservation
     ) -> AmbassadorReservation:
-        # Fetch the existing reservation from the database
+        """This method will update the existing reservation."""
         existing_ambass_group = (
             self._session.query(AmbassadorReservationEntity)
             .filter_by(group_id=group_id)
             .first()
         )
 
-        # Update the properties based on the new data
         existing_ambass_group.status = new_ambass_group.status
 
         try:
             self._session.commit()
         except Exception as e:
-            # Handle exceptions appropriately (e.g., log the error, rollback the transaction)
             self._session.rollback()
             raise e
 
@@ -522,6 +516,7 @@ class ReservationService:
         return existing_ambass_group.to_model()
 
     def get_group_reservation(self, groupId: str) -> GroupReservation:
+        """This method will retrieve a group reservation by group id."""
         reservation_entity = (
             self._session.query(GroupReservationEntity)
             .filter_by(group_id=groupId)
@@ -533,6 +528,7 @@ class ReservationService:
             raise ValueError("NOTFOUND")
 
     def get_count_seat(self):
+        """This method will retrieve the total count seat available for each type of table."""
         round_count = (
             self._session.query(func.count(GroupReservationEntity.what))
             .filter(GroupReservationEntity.what == "Round Table")
@@ -548,6 +544,7 @@ class ReservationService:
         return {"round table": round_count, "conference table": conference_count}
 
     def get_ambass_group_reservations(self) -> List[AmbassadorReservation]:
+        """This function will retrieve the total amount of group reservations located in the check in table."""
         reservation_entity_list = self._session.query(AmbassadorReservationEntity).all()
 
         if reservation_entity_list:
@@ -556,6 +553,7 @@ class ReservationService:
             raise ValueError("NOTFOUND")
 
     def delete_group_reservation(self, groupId: str):
+        """This function will delete the existing group reservation by group id."""
         reservation_entity = (
             self._session.query(GroupReservationEntity)
             .filter_by(group_id=groupId)
@@ -569,6 +567,7 @@ class ReservationService:
             raise ValueError("No group reservation with this ID exists.")
 
     def delete_ambassador_group_reservation(self, groupId: str):
+        """This method will delete a group from the check in page once they click checkout."""
         reservation_entity = (
             self._session.query(GroupReservationEntity)
             .filter_by(group_id=groupId)
